@@ -1,0 +1,303 @@
+<div class="container-fluid p-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12 col-md-8">
+            <h2 class="fw-bold mb-1">Análisis de Datos</h2>
+            <p class="text-muted mb-0">Tendencias de uso, patrones de comportamiento y métricas clave</p>
+        </div>
+        <div class="col-12 col-md-4 d-flex justify-content-md-end align-items-start mt-3 mt-md-0">
+            <select class="form-select w-auto">
+                <option selected>Últimos 30 días</option>
+                <option>Últimos 7 días</option>
+                <option>Últimos 90 días</option>
+                <option>Este año</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Tarjetas de métricas -->
+    <div class="row g-3 mb-4">
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="text-muted small">Usuarios Activos</span>
+                        <i class="bi bi-people text-muted"></i>
+                    </div>
+                    <h3 class="fw-bold mb-1">1,234</h3>
+                    <small class="text-success">
+                        <i class="bi bi-arrow-up"></i> +15% vs mes anterior
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="text-muted small">Tiempo Promedio</span>
+                        <i class="bi bi-clock text-muted"></i>
+                    </div>
+                    <h3 class="fw-bold mb-1">4.2h</h3>
+                    <small class="text-success">
+                        <i class="bi bi-arrow-up"></i> +8% por día
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="text-muted small">Tasa de Finalización</span>
+                        <i class="bi bi-check-circle text-muted"></i>
+                    </div>
+                    <h3 class="fw-bold mb-1">87%</h3>
+                    <small class="text-danger">
+                        <i class="bi bi-arrow-down"></i> -3% tareas completadas
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="text-muted small">Retención 30d</span>
+                        <i class="bi bi-arrow-repeat text-muted"></i>
+                    </div>
+                    <h3 class="fw-bold mb-1">68%</h3>
+                    <small class="text-success">
+                        <i class="bi bi-arrow-up"></i> +5% usuarios regresan
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráficos principales -->
+    <div class="row g-3 mb-4">
+        <!-- Gráfico de líneas -->
+        <div class="col-12 col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="fw-semibold mb-1">Crecimiento Mensual</h5>
+                    <p class="text-muted small mb-4">Evolución de usuarios, horas y tareas completadas</p>
+                    <div class="bg-light rounded-3 p-4">
+                        <div class="text-center text-muted py-5">
+                            <i class="bi bi-graph-up fs-1 mb-3 d-block"></i>
+                            <p class="mb-0">Gráfico de líneas de tendencia</p>
+                            <small>Usuarios, horas y tareas por mes</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Gráfico de área -->
+        <div class="col-12 col-lg-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="fw-semibold mb-1">Horas Pico de Actividad</h5>
+                    <p class="text-muted small mb-4">Distribución de actividad durante el día</p>
+                    <div class="bg-light rounded-3 p-4">
+                        <div class="text-center text-muted py-5">
+                            <i class="bi bi-activity fs-1 mb-3 d-block"></i>
+                            <p class="mb-0">Gráfico de área de actividad</p>
+                            <small>Horas de mayor uso: 10:00-16:00</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección inferior con tres columnas -->
+    <div class="row g-3 mb-4">
+        <!-- Categorías más utilizadas -->
+        <div class="col-12 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="fw-semibold mb-1">Categorías Más Utilizadas</h5>
+                    <p class="text-muted small mb-4">Distribución por tipo de actividad</p>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-primary rounded-circle p-2"></span>
+                                <span class="small">Trabajo</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="small text-muted">42%</span>
+                                <span class="badge bg-primary rounded-pill small">+12%</span>
+                            </div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary w-50"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-success rounded-circle p-2"></span>
+                                <span class="small">Personal</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="small text-muted">29%</span>
+                                <span class="badge bg-success rounded-pill small">+8%</span>
+                            </div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-success w-25"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-info rounded-circle p-2"></span>
+                                <span class="small">Estudio</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="small text-muted">18%</span>
+                                <span class="badge bg-danger rounded-pill small">-3%</span>
+                            </div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-info w-25"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-danger rounded-circle p-2"></span>
+                                <span class="small">Ejercicio</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="small text-muted">8%</span>
+                                <span class="badge bg-success rounded-pill small">+5%</span>
+                            </div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-danger w-25"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-secondary rounded-circle p-2"></span>
+                                <span class="small">Otros</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="small text-muted">4%</span>
+                                <span class="badge bg-secondary rounded-pill small">+2%</span>
+                            </div>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-secondary w-25"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dispositivos utilizados -->
+        <div class="col-12 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="fw-semibold mb-1">Dispositivos Utilizados</h5>
+                    <p class="text-muted small mb-4">Distribución por tipo de dispositivo</p>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="small fw-semibold">Móvil</span>
+                            <span class="small text-muted">68%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary w-75"></div>
+                        </div>
+                        <small class="text-muted">1,245 usuarios</small>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="small fw-semibold">Desktop</span>
+                            <span class="small text-muted">32%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary w-25"></div>
+                        </div>
+                        <small class="text-muted">700 usuarios</small>
+                    </div>
+
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="small fw-semibold">Tablet</span>
+                            <span class="small text-muted">15%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary w-25"></div>
+                        </div>
+                        <small class="text-muted">Otros dispositivos</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Retención de usuarios -->
+        <div class="col-12 col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="fw-semibold mb-1">Retención de Usuarios</h5>
+                    <p class="text-muted small mb-4">Porcentaje de usuarios que regresan</p>
+                    <div class="bg-light rounded-3 p-4">
+                        <div class="text-center text-muted py-4">
+                            <i class="bi bi-bar-chart fs-1 mb-3 d-block"></i>
+                            <p class="mb-0">Gráfico de barras de retención</p>
+                            <small>Días 1, 7, 30, 60, 90</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Insights y Recomendaciones -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <h5 class="fw-semibold mb-1">Insights y Recomendaciones</h5>
+                    <p class="text-muted small mb-4">Análisis automático basado en los datos actuales</p>
+                    
+                    <div class="alert alert-primary border-0 d-flex align-items-start mb-3">
+                        <i class="bi bi-check-circle-fill me-3 mt-1"></i>
+                        <div>
+                            <strong>Crecimiento Positivo</strong>
+                            <p class="mb-0 small">El número de usuarios activos ha crecido un 12% este mes. El pico de actividad se concentra entre las 10:00-16:00.</p>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning border-0 d-flex align-items-start mb-3">
+                        <i class="bi bi-exclamation-triangle-fill me-3 mt-1"></i>
+                        <div>
+                            <strong>Área de Mejora</strong>
+                            <p class="mb-0 small">La tasa de finalización de tareas ha bajado un 3%. Considera implementar recordatorios o gamificación.</p>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-success border-0 d-flex align-items-start mb-0">
+                        <i class="bi bi-lightbulb-fill me-3 mt-1"></i>
+                        <div>
+                            <strong>Oportunidad</strong>
+                            <p class="mb-0 small">El 68% de los usuarios usan dispositivos móviles. Optimizar la experiencia móvil podría aumentar el engagement.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

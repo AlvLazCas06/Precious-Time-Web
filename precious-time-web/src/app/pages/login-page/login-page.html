@@ -11,20 +11,22 @@
         <div class="col-md-6 bg-white d-flex align-items-center justify-content-center">
             <div class="w-75 px-4">
                 <h1 class="text-center mb-5 fw-light fs-1">Iniciar Sesión</h1>
-                <form>
+                <form [formGroup]="loginFormGroup">
                     <div class="mb-4">
                         <input type="text" 
                                id="username" 
                                name="username" 
                                class="form-control form-control-lg rounded-3 border-secondary" 
-                               placeholder="Usuario">
+                               placeholder="Usuario"
+                               formControlName="usernameFormControl">
                     </div>
                     <div class="mb-4">
                         <input type="password" 
                                name="password" 
                                id="password" 
                                class="form-control form-control-lg rounded-3 border-secondary" 
-                               placeholder="Contraseña">
+                               placeholder="Contraseña"
+                               formControlName="passwordFormControl">
                     </div>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-primary btn-lg rounded-3">Entrar</button>
