@@ -15,9 +15,9 @@
             </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#notificaciones" type="button" role="tab">
+            <a routerLink="/config/notification" class="nav-link" data-bs-toggle="tab" data-bs-target="#notificaciones" type="button" role="tab">
                 Notificaciones
-            </button>
+            </a>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#sistema" type="button" role="tab">
@@ -46,7 +46,7 @@
                             </h5>
                             <p class="text-muted small mb-0">Personaliza las categorías disponibles para las tareas</p>
                         </div>
-                        <button class="btn btn-primary d-flex align-items-center gap-2">
+                        <button class="btn btn-primary d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#newCategoryModal">
                             <i class="bi bi-plus-lg"></i>
                             Nueva Categoría
                         </button>
@@ -219,6 +219,51 @@
                         <p>Configuración de seguridad</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Nueva Categoría -->
+<div class="modal fade" id="newCategoryModal" tabindex="-1" aria-labelledby="newCategoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold" id="newCategoryModalLabel">Crear Nueva Categoría</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted small mb-4">Agrega una nueva categoría para organizar las tareas</p>
+
+                <!-- Nombre de la Categoría -->
+                <div class="mb-3">
+                    <label for="categoryName" class="form-label fw-semibold">Nombre de la Categoría</label>
+                    <input type="text" class="form-control" id="categoryName" placeholder="Ej: Proyectos" [(ngModel)]="newCategory.name">
+                </div>
+
+                <!-- Color -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold d-block">Color</label>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <button type="button" class="btn rounded-circle p-3 border" [class.border-dark]="newCategory.color === 'primary'" [class.border-2]="newCategory.color === 'primary'" [class.bg-primary]="true" (click)="selectColor('primary')"></button>
+                        <button type="button" class="btn rounded-circle p-3 border" [class.border-dark]="newCategory.color === 'warning'" [class.border-2]="newCategory.color === 'warning'" [class.bg-warning]="true" (click)="selectColor('warning')"></button>
+                        <button type="button" class="btn rounded-circle p-3 border" [class.border-dark]="newCategory.color === 'danger'" [class.border-2]="newCategory.color === 'danger'" [class.bg-danger]="true" (click)="selectColor('danger')"></button>
+                        <button type="button" class="btn rounded-circle p-3 border" [class.border-dark]="newCategory.color === 'success'" [class.border-2]="newCategory.color === 'success'" [class.bg-success]="true" (click)="selectColor('success')"></button>
+                        <button type="button" class="btn rounded-circle p-3 border" [class.border-dark]="newCategory.color === 'info'" [class.border-2]="newCategory.color === 'info'" [class.bg-info]="true" (click)="selectColor('info')"></button>
+                        <button type="button" class="btn rounded-circle p-3 border" [class.border-dark]="newCategory.color === 'secondary'" [class.border-2]="newCategory.color === 'secondary'" [class.bg-secondary]="true" (click)="selectColor('secondary')"></button>
+                        <button type="button" class="btn rounded-circle p-3 border" [class.border-dark]="newCategory.color === 'dark'" [class.border-2]="newCategory.color === 'dark'" [class.bg-dark]="true" (click)="selectColor('dark')"></button>
+                    </div>
+                </div>
+
+                <!-- Icono (Emoji) -->
+                <div class="mb-3">
+                    <label for="categoryIcon" class="form-label fw-semibold">Icono (Emoji)</label>
+                    <input type="text" class="form-control" id="categoryIcon" placeholder="😊" maxlength="2" [(ngModel)]="newCategory.icon">
+                </div>
+            </div>
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" (click)="createCategory()">Crear Categoría</button>
             </div>
         </div>
     </div>
