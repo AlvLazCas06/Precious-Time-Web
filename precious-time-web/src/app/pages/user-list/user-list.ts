@@ -1,49 +1,46 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-user-list',
-  imports: [FormsModule, CommonModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './user-list.html',
   styleUrl: './user-list.css',
 })
 export class UserList {
-  newUser = {
-    name: '',
-    email: '',
-    role: 'Usuario',
-    phone: '',
-    active: true
-  };
 
-  createUser() {
-    if (this.newUser.name.trim() && this.newUser.email.trim()) {
-      console.log('Nuevo usuario creado:', this.newUser);
-      // Aquí puedes agregar la lógica para guardar el usuario
-      // Por ejemplo, llamar a un servicio
+  userFormGroup = new FormGroup({
+    nameFormControl: new FormControl('', [
+      Validators.required,
+      Validators.min(2),
+    ]),
+    emailFormControl: new FormControl('', [
+      Validators.required,
+      Validators.email
+    ]),
+    rolFormControl: new FormControl('', [
+      Validators.required
+    ]),
+    phoneFormControl: new FormControl('', [
+      Validators.required
+    ]),
+    activeFormControl: new FormControl()
+  });
 
-      // Cerrar el modal
-      const modalElement = document.getElementById('newUserModal');
-      if (modalElement) {
-        const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
-        if (modal) {
-          modal.hide();
-        }
-      }
-
-      // Resetear el formulario
-      this.resetForm();
-    }
+  get nameFormControl() {
+    return this.userFormGroup.get('nameFormControl');
   }
 
-  resetForm() {
-    this.newUser = {
-      name: '',
-      email: '',
-      role: 'Usuario',
-      phone: '',
-      active: true
-    };
+  get emailFormControl() {
+    return this.userFormGroup.get('emailFormControl');
   }
+
+  get rolFormControl() {
+    return this.userFormGroup.get('rolFormControl');
+  }
+
+  get phoneFormControl() {
+    return this.userFormGroup.get('phoneFormControl');
+  }
+
 }
