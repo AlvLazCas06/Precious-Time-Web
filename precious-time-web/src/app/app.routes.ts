@@ -8,6 +8,7 @@ import { CategoryListPage } from './pages/configurations/category/category-list-
 import { NotificationPage } from './pages/configurations/notification-page/notification-page';
 import { SystemConfigPage } from './pages/configurations/system-config-page/system-config-page';
 import { SecurityConfigPage } from './pages/configurations/security-config-page/security-config-page';
+import { SignUpPage } from './pages/sign-up-page/sign-up-page';
 
 export const routes: Routes = [
     {
@@ -18,6 +19,10 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginPage
+    },
+    {
+      path: 'register',
+      component: SignUpPage
     },
     {
         path: 'users',
