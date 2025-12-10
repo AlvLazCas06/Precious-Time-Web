@@ -1,0 +1,38 @@
+<div class="container-fluid vh-100 p-0">
+    <div class="row g-0 h-100">
+        <div class="col-md-6 bg-light d-flex align-items-center justify-content-center">
+            <div class="w-75 p-5">
+                <img src="images/precious-time-logo-big.png"
+                     alt="Logo Precious Time"
+                     class="img-fluid">
+            </div>
+        </div>
+
+        <div class="col-md-6 bg-white d-flex align-items-center justify-content-center">
+            <div class="w-75 px-4">
+                <h1 class="text-center mb-5 fw-light fs-1">Iniciar Sesión</h1>
+                <form [formGroup]="signUpForm">
+                    <div class="mb-4">
+                        <input type="text"
+                               id="username"
+                               name="username"
+                               class="form-control form-control-lg rounded-3 border-secondary"
+                               placeholder="Usuario"
+                               formControlName="nameFormControl">
+                    </div>
+                    <div class="mb-4">
+                        <input type="password"
+                               name="password"
+                               id="password"
+                               class="form-control form-control-lg rounded-3 border-secondary"
+                               placeholder="Contraseña"
+                               formControlName="passwordFormControl">
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-primary btn-lg rounded-3">Crear cuenta</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
