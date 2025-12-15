@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { UserCreateDto } from '../models/dto/user-create.dto';
 import { Observable } from 'rxjs';
 import { UserCreateResponse } from '../models/interfaces/user-create-response.interface';
+import { UserLoginDto } from '../models/dto/user-login.dto';
+import { UserLoginResponse } from '../models/interfaces/user-login-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +17,10 @@ export class UserService {
 
   createUser(user: UserCreateDto): Observable<UserCreateResponse> {
     return this.http.post<UserCreateResponse>(`${this.urlBase}/register`, user);
+  }
+
+  loginUser(user: UserLoginDto): Observable<UserLoginResponse> {
+    return this.http.post<UserLoginResponse>(`${this.urlBase}/login`, user);
   }
 
 }

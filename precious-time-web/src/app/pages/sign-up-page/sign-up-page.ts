@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { UserCreateDto } from '../../models/dto/user-create.dto';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up-page',
@@ -26,7 +27,10 @@ export class SignUpPage {
     ])
   });
 
-  constructor(private service: UserService) { }
+  constructor(
+    private service: UserService,
+    private router: Router
+  ) { }
 
   createUser() {
     const user = new UserCreateDto(
@@ -36,7 +40,10 @@ export class SignUpPage {
       this.signUpForm.get('passwordFormControl')?.value!
     );
     this.service.createUser(user).subscribe(resp => {
-      console.log(resp);
+      const token = resp.token;
+      localStorage.setItem('token', token);
+      alert('No tienes acceso debido a que tu rol creado es de usuario.\nPonte en contacto con el admin para que te cambie el rol.');
+      this.router.navigate(['/login'])
     })
   }
 
