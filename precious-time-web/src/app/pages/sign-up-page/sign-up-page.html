@@ -19,6 +19,18 @@
               placeholder="Nombre"
               formControlName="nameFormControl"
             />
+            @if (signUpForm.get('nameFormControl')?.invalid && signUpForm.get('nameFormControl')?.dirty) {
+              <div class="mt-2 alert alert-danger">
+                @if (signUpForm.get('nameFormControl')?.hasError('required')) {
+                  <p>El nombre es un campo obligatorio</p>
+                }
+                @if (signUpForm.get('nameFormControl')?.hasError('minLength')) {
+                  <p>La cantidad de caracteres del nombre es insuficiente</p>
+                }
+              </div>
+            }
+          </div>
+          <div class="mb-4">
             <input
               type="email"
               id="email"
@@ -27,6 +39,16 @@
               placeholder="Email"
               formControlName="emailFormControl"
             />
+            @if (signUpForm.get('emailFormControl')?.invalid && signUpForm.get('emailFormControl')?.dirty) {
+              <div class="mt-2 alert alert-danger">
+                @if (signUpForm.get('emailFormControl')?.hasError('required')) {
+                  <p>El email es un campo obligatorio</p>
+                }
+                @if (signUpForm.get('emailFormControl')?.hasError('email')) {
+                  <p>No es una dirección de correo valida</p>
+                }
+              </div>
+            }
           </div>
           <div class="mb-4">
             <input
@@ -37,9 +59,34 @@
               placeholder="Contraseña"
               formControlName="passwordFormControl"
             />
+            @if (signUpForm.get('passwordFormControl')?.invalid && signUpForm.get('passwordFormControl')?.dirty) {
+              <div class="mt-2 alert alert-danger">
+                @if (signUpForm.get('passwordFormControl')?.hasError('required')) {
+                  <p>La contraseña es un campo obligatorio</p>
+                }
+                @if (signUpForm.get('passwordFormControl')?.hasError('minLength')) {
+                  <p>No es una dirección de correo valida</p>
+                }
+              </div>
+            }
+          </div>
+          <div class="mb-4">
+            <input
+              type="password"
+              name="password"
+              id="password"
+              class="form-control form-control-lg rounded-3 border-secondary"
+              placeholder="Contraseña"
+              formControlName="passwordConfirmFormControl"
+            />
+            @if (signUpForm.get('passwordConfirmFormControl')?.dirty && signUpForm.get('passwordConfirmFormControl')?.value != signUpForm.get('passwordFormControl')?.value) {
+              <div class="alert alert-danger">
+                <p>Las contraseñas no son iguales</p>
+              </div>
+            }
           </div>
           <div class="d-grid">
-            <button class="btn btn-primary btn-lg rounded-3" [disabled]="signUpForm.invalid" (click)="createUser()">Crear cuenta</button>
+            <button class="btn btn-primary btn-lg rounded-3" [disabled]="signUpForm.invalid || signUpForm.get('passwordConfirmFormControl')?.value != signUpForm.get('passwordFormControl')?.value" (click)="createUser()">Crear cuenta</button>
           </div>
         </form>
       </div>

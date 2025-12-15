@@ -21,9 +21,6 @@ export class UserList {
     rolFormControl: new FormControl('', [
       Validators.required
     ]),
-    phoneFormControl: new FormControl('', [
-      Validators.required
-    ]),
     activeFormControl: new FormControl()
   });
 

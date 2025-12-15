@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { UserService } from '../../services/user.service';
 import { UserCreateDto } from '../../models/dto/user-create.dto';
 import { Router } from '@angular/router';
+import { PreferenceService } from '../../services/preference.service';
 
 @Component({
   selector: 'app-sign-up-page',
@@ -24,11 +25,16 @@ export class SignUpPage {
     passwordFormControl: new FormControl('', [
       Validators.required,
       Validators.minLength(8),
+    ]),
+    passwordConfirmFormControl: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
     ])
   });
 
   constructor(
-    private service: UserService,
+    private userService: UserService,
+    private preferenceService: PreferenceService,
     private router: Router
   ) { }
 
@@ -37,13 +43,15 @@ export class SignUpPage {
       this.signUpForm.get('nameFormControl')?.value!,
       this.signUpForm.get('emailFormControl')?.value!,
       this.signUpForm.get('passwordFormControl')?.value!,
-      this.signUpForm.get('passwordFormControl')?.value!
+      this.signUpForm.get('passwordConfirmFormControl')?.value!
     );
-    this.service.createUser(user).subscribe(resp => {
+    this.userService.createUser(user).subscribe(resp => {
       const token = resp.token;
       localStorage.setItem('token', token);
+      this.preferenceService.createPreference().subscribe();
       alert('No tienes acceso debido a que tu rol creado es de usuario.\nPonte en contacto con el admin para que te cambie el rol.');
-      this.router.navigate(['/login'])
+      this.router.navigate(['/login']);
+
     })
   }
 
