@@ -52,6 +52,29 @@
           </div>
           <div class="mb-4">
             <input
+              type="text"
+              name="phone"
+              id="phone"
+              class="form-control form-control-lg rounded-3 border-secondary"
+              placeholder="Número de teléfono"
+              formControlName="phoneNumberFormControl"
+            />
+            @if (signUpForm.get('phoneNumberFormControl')?.invalid && signUpForm.get('phoneNumberFormControl')?.dirty) {
+              <div class="mt-2 alert alert-danger">
+                @if (signUpForm.get('phoneNumberFormControl')?.hasError('required')) {
+                  <p>La contraseña es un campo obligatorio</p>
+                }
+                @if (signUpForm.get('phoneNumberFormControl')?.hasError('minLength')) {
+                  <p>No es una dirección de correo valida</p>
+                }
+                @if (signUpForm.get('phoneNumberFormControl')?.hasError('maxLength')) {
+                  <p>No es una dirección de correo valida</p>
+                }
+              </div>
+            }
+          </div>
+          <div class="mb-4">
+            <input
               type="password"
               name="password"
               id="password"
@@ -73,10 +96,10 @@
           <div class="mb-4">
             <input
               type="password"
-              name="password"
-              id="password"
+              name="passwordconfirm"
+              id="passwordconfirm"
               class="form-control form-control-lg rounded-3 border-secondary"
-              placeholder="Contraseña"
+              placeholder="Confirmar contraseña"
               formControlName="passwordConfirmFormControl"
             />
             @if (signUpForm.get('passwordConfirmFormControl')?.dirty && signUpForm.get('passwordConfirmFormControl')?.value != signUpForm.get('passwordFormControl')?.value) {

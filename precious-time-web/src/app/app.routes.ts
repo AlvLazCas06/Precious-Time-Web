@@ -37,10 +37,6 @@ export const routes: Routes = [
         component: DashboardPage
     },
     {
-        path: 'side',
-        component: Sidebar
-    },
-    {
         path: 'config/category',
         component: CategoryListPage
     },
