@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Sidebar } from "../../layouts/admin-layout-component/sidebar/sidebar";
 
 @Component({
   selector: 'app-user-list',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, Sidebar],
   templateUrl: './user-list.html',
   styleUrl: './user-list.css',
 })
@@ -19,9 +20,6 @@ export class UserList {
       Validators.email
     ]),
     rolFormControl: new FormControl('', [
-      Validators.required
-    ]),
-    phoneFormControl: new FormControl('', [
       Validators.required
     ]),
     activeFormControl: new FormControl()

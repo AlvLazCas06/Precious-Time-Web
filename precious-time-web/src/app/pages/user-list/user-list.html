@@ -1,4 +1,5 @@
-<div class="container-fluid p-4">
+<app-sidebar></app-sidebar>
+<div class="container-fluid p-4" style="margin-left: 250px;">
   <div class="row mb-4">
     <div class="col">
       <div class="d-flex justify-content-between align-items-start">
@@ -168,7 +169,7 @@
       </div>
       <div class="modal-body">
         <p class="text-muted small mb-4">Agrega un nuevo usuario al sistema</p>
-        <form action="#" formGroupName="userFormGroup">
+        <form action="#" [formGroup]="userFormGroup">
           <!-- Nombre Completo -->
           <div class="mb-3">
             <label for="userName" class="form-label fw-semibold">Nombre Completo</label>
