@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Sidebar } from "../../../../layouts/admin-layout-component/sidebar/sidebar";
 
 @Component({
   selector: 'app-category-list-page',
-  imports: [RouterLink, FormsModule, CommonModule],
+  imports: [RouterLink, FormsModule, CommonModule, Sidebar],
   templateUrl: './category-list-page.html',
   styleUrl: './category-list-page.css',
 })
