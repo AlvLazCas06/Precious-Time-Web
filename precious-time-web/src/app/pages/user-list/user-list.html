@@ -20,7 +20,7 @@
     <div class="col-12 col-sm-6 col-lg-3">
       <div class="card border-0 shadow-sm">
         <div class="card-body">
-          <h3 class="fw-bold mb-0">1,234</h3>
+          <h3 class="fw-bold mb-0">{{ totalUsers }}</h3>
           <p class="text-muted small mb-0">Total Usuarios</p>
         </div>
       </div>
@@ -28,7 +28,7 @@
     <div class="col-12 col-sm-6 col-lg-3">
       <div class="card border-0 shadow-sm">
         <div class="card-body">
-          <h3 class="fw-bold mb-0">1,156</h3>
+          <h3 class="fw-bold mb-0">{{ userActive }}</h3>
           <p class="text-muted small mb-0">Usuarios Activos</p>
         </div>
       </div>
@@ -36,7 +36,7 @@
     <div class="col-12 col-sm-6 col-lg-3">
       <div class="card border-0 shadow-sm">
         <div class="card-body">
-          <h3 class="fw-bold mb-0">78</h3>
+          <h3 class="fw-bold mb-0">{{ userInactive }}</h3>
           <p class="text-muted small mb-0">Inactivos</p>
         </div>
       </div>
@@ -44,7 +44,7 @@
     <div class="col-12 col-sm-6 col-lg-3">
       <div class="card border-0 shadow-sm">
         <div class="card-body">
-          <h3 class="fw-bold mb-0">125</h3>
+          <h3 class="fw-bold mb-0">{{ newUsersMonth }}</h3>
           <p class="text-muted small mb-0">Nuevos (este mes)</p>
         </div>
       </div>
@@ -80,17 +80,18 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            @for (user of users; track user.id) {
+              <tr>
               <td>
                 <div>
-                  <div class="fw-semibold">María García</div>
+                  <div class="fw-semibold">{{ user.name }}</div>
                   <div class="text-muted small">
-                    <i class="bi bi-envelope me-1"></i>maria.garcia@email.com
+                    <i class="bi bi-envelope me-1"></i>{{ user.email }}
                   </div>
                 </div>
               </td>
               <td>
-                <span class="badge bg-primary rounded-pill">Admin</span>
+                <span [class]="'badge bg-primary rounded-pill'">Admin</span>
               </td>
               <td>
                 <span class="badge bg-primary bg-opacity-25 text-primary rounded-pill">Activo</span>
@@ -104,54 +105,7 @@
                 </button>
               </td>
             </tr>
-            <tr>
-              <td>
-                <div>
-                  <div class="fw-semibold">Juan Pérez</div>
-                  <div class="text-muted small">
-                    <i class="bi bi-envelope me-1"></i>juan.perez@email.com
-                  </div>
-                </div>
-              </td>
-              <td>
-                <span class="badge bg-secondary rounded-pill">Usuario</span>
-              </td>
-              <td>
-                <span class="badge bg-primary bg-opacity-25 text-primary rounded-pill">Activo</span>
-              </td>
-              <td>32</td>
-              <td>89h</td>
-              <td class="text-muted small">hace 15 min</td>
-              <td>
-                <button class="btn btn-link text-dark p-0">
-                  <i class="bi bi-pencil-square"></i>
-                </button>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div>
-                  <div class="fw-semibold">Carlos López</div>
-                  <div class="text-muted small">
-                    <i class="bi bi-envelope me-1"></i>carlos.lopez@email.com
-                  </div>
-                </div>
-              </td>
-              <td>
-                <span class="badge bg-secondary rounded-pill">Usuario</span>
-              </td>
-              <td>
-                <span class="badge bg-primary bg-opacity-25 text-primary rounded-pill">Activo</span>
-              </td>
-              <td>23</td>
-              <td>67h</td>
-              <td class="text-muted small">hace 1 hora</td>
-              <td>
-                <button class="btn btn-link text-dark p-0">
-                  <i class="bi bi-pencil-square"></i>
-                </button>
-              </td>
-            </tr>
+            }
           </tbody>
         </table>
       </div>
