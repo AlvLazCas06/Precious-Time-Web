@@ -1,51 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from "@angular/router";
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Sidebar } from "../../../../layouts/admin-layout-component/sidebar/sidebar";
+import { CategoryService } from '../../../../services/category.service';
+import { CategoryDto } from '../../../../models/dto/category.dto';
+import { CategoryResponse } from '../../../../models/interfaces/category-response.interface';
 
 @Component({
   selector: 'app-category-list-page',
-  imports: [RouterLink, FormsModule, CommonModule, Sidebar],
+  imports: [CommonModule, Sidebar, RouterLink, ReactiveFormsModule],
   templateUrl: './category-list-page.html',
   styleUrl: './category-list-page.css',
 })
-export class CategoryListPage {
-  newCategory = {
-    name: '',
-    color: 'primary',
-    icon: ''
-  };
+export class CategoryListPage implements OnInit {
 
-  selectColor(color: string) {
-    this.newCategory.color = color;
+  categories: CategoryResponse[] = [];
+  newCategoryForm = new FormGroup({
+    nameFormControl: new FormControl(''),
+    emojiFormControl: new FormControl(''),
+    colorFormControl: new FormControl('')
+  });
+
+  constructor(private categoryService: CategoryService) {}
+
+  ngOnInit(): void {
+    this.categoryService.getCategories().subscribe(resp => {
+      this.categories = resp;
+    })
   }
 
   createCategory() {
-    if (this.newCategory.name.trim()) {
-      console.log('Nueva categoría creada:', this.newCategory);
-      // Aquí puedes agregar la lógica para guardar la categoría
-      // Por ejemplo, llamar a un servicio
-
-      // Cerrar el modal
-      const modalElement = document.getElementById('newCategoryModal');
-      if (modalElement) {
-        const modal = (window as any).bootstrap.Modal.getInstance(modalElement);
-        if (modal) {
-          modal.hide();
-        }
-      }
-
-      // Resetear el formulario
-      this.resetForm();
-    }
+    const newCategory = new CategoryDto(
+      this.newCategoryForm.get('nameFormControl')?.value!,
+      this.newCategoryForm.get('emojiFormControl')?.value!,
+      this.newCategoryForm.get('colorFormControl')?.value!
+    );
+    this.categoryService.createCategory(newCategory).subscribe();
   }
 
-  resetForm() {
-    this.newCategory = {
-      name: '',
-      color: 'primary',
-      icon: ''
-    };
-  }
 }

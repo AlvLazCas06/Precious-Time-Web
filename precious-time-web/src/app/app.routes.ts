@@ -4,7 +4,6 @@ import { UserList } from './pages/user-list/user-list';
 import { AnalysisPage } from './pages/analysis-page/analysis-page';
 import { DashboardPage } from './pages/dashboard-page/dashboard-page';
 import { CategoryListPage } from './pages/configurations/category/category-list-page/category-list-page';
-import { NotificationPage } from './pages/configurations/notification-page/notification-page';
 import { SystemConfigPage } from './pages/configurations/system-config-page/system-config-page';
 import { SignUpPage } from './pages/sign-up-page/sign-up-page';
 
@@ -37,10 +36,6 @@ export const routes: Routes = [
     {
         path: 'config/category',
         component: CategoryListPage
-    },
-    {
-        path: 'config/notification',
-        component: NotificationPage
     },
     {
         path: 'config/system',
