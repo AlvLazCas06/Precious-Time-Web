@@ -12,8 +12,12 @@ export class PreferenceService {
 
   constructor(private http: HttpClient) { }
 
-  createPreference():Observable<PreferenceResponse> {
+  createPreference(): Observable<PreferenceResponse> {
     return this.http.post<PreferenceResponse>(`${this.urlBase}/preference`, null);
+  }
+
+  getPreference(): Observable<PreferenceResponse> {
+    return this.http.get<PreferenceResponse>(`${this.urlBase}/preference/${localStorage.getItem('preferences')}`);
   }
 
 }
