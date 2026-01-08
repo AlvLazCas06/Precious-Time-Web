@@ -33,6 +33,21 @@ export class CategoryListPage implements OnInit {
       Validators.required
     ])
   });
+  editCategoryForm = new FormGroup({
+    nameFormControl: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.maxLength(255)
+    ]),
+    emojiFormControl: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.maxLength(2)
+    ]),
+    colorFormControl: new FormControl('', [
+      Validators.required
+    ])
+  });
 
   constructor(private categoryService: CategoryService) { }
 
@@ -61,7 +76,11 @@ export class CategoryListPage implements OnInit {
 
   openEditModal(id: number) {
     this.categoryService.getCategory(id).subscribe(resp => {
-      this.category = resp;
+      this.editCategoryForm.patchValue({
+        nameFormControl: resp.name,
+        emojiFormControl: resp.emoji,
+        colorFormControl: resp.color
+      });
       this.openModal = true;
     });
   }

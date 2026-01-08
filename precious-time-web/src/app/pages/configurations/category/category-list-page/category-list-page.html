@@ -147,7 +147,7 @@
         <p class="text-muted small mb-4">Agrega una nueva categoría para organizar las tareas</p>
 
         <!-- Nombre de la Categoría -->
-        <form [formGroup]="newCategoryForm">
+        <form [formGroup]="editCategoryForm">
           <div class="mb-3">
             <label for="categoryName" class="form-label fw-semibold">Nombre de la Categoría</label>
             <input
@@ -156,14 +156,13 @@
               id="categoryName"
               placeholder="Ej: Proyectos"
               formControlName="nameFormControl"
-              [value]="category?.name"
             />
           </div>
 
           <!-- Color -->
           <div class="mb-3">
             <label for="color" class="form-label fw-semibold d-block">Color</label>
-            <select name="color" id="color" class="form-select" formControlName="colorFormControl" [value]="category?.color">
+            <select name="color" id="color" class="form-select" formControlName="colorFormControl">
               <option value="danger">Rojo</option>
               <option value="primary">Azul</option>
               <option value="warning">Amarillo</option>
@@ -181,7 +180,6 @@
               id="categoryIcon"
               placeholder="😊"
               formControlName="emojiFormControl"
-              [value]="category?.emoji"
             />
           </div>
         </form>
