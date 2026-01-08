@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from "@angular/router";
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Sidebar } from "../../../../layouts/admin-layout-component/sidebar/sidebar";
 import { CategoryService } from '../../../../services/category.service';
@@ -17,9 +17,19 @@ export class CategoryListPage implements OnInit {
 
   categories: CategoryResponse[] = [];
   newCategoryForm = new FormGroup({
-    nameFormControl: new FormControl(''),
-    emojiFormControl: new FormControl(''),
-    colorFormControl: new FormControl('')
+    nameFormControl: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.maxLength(255)
+    ]),
+    emojiFormControl: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+      Validators.maxLength(2)
+    ]),
+    colorFormControl: new FormControl('', [
+      Validators.required
+    ])
   });
 
   constructor(private categoryService: CategoryService) {}
@@ -36,7 +46,15 @@ export class CategoryListPage implements OnInit {
       this.newCategoryForm.get('emojiFormControl')?.value!,
       this.newCategoryForm.get('colorFormControl')?.value!
     );
-    this.categoryService.createCategory(newCategory).subscribe();
+    this.categoryService.createCategory(newCategory).subscribe(resp => {
+      window.location.reload();
+    });
+  }
+
+  removeCategory(id: number) {
+    this.categoryService.deleteCategory(id).subscribe(resp => {
+      window.location.reload();
+    });
   }
 
 }

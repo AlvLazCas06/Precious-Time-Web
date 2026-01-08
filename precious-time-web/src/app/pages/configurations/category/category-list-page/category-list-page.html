@@ -13,10 +13,10 @@
   <!-- Tabs de navegación -->
   <ul class="nav nav-tabs mb-4" role="tablist">
     <li class="nav-item" role="presentation">
-      <a class="nav-link" routerLink="/config/category"> Categorías </a>
+      <a class="nav-link active" routerLink="/config/category"> Categorías </a>
     </li>
     <li class="nav-item" role="presentation">
-      <a class="nav-link active" routerLink="/config/system"> Sistema </a>
+      <a class="nav-link" routerLink="/config/system"> Sistema </a>
     </li>
   </ul>
   <div class="tab-content">
@@ -48,7 +48,7 @@
               <div class="d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center gap-3">
                   <span class="badge bg-primary rounded-circle p-3"></span>
-                  <i class="bi bi-briefcase text-muted fs-5"></i>
+                  <span>{{category.emoji}}</span>
                   <div>
                     <div class="fw-semibold">{{ category.name }}</div>
                     <small class="text-muted">245 tareas asignadas</small>
@@ -58,7 +58,7 @@
                   <button class="btn btn-sm btn-link text-primary p-1">
                     <i class="bi bi-pencil"></i>
                   </button>
-                  <button class="btn btn-sm btn-link text-danger p-1">
+                  <button class="btn btn-sm btn-link text-danger p-1" (click)="removeCategory(category.id)">
                     <i class="bi bi-trash"></i>
                   </button>
                 </div>
@@ -102,19 +102,14 @@
 
           <!-- Color -->
           <div class="mb-3">
-            <label class="form-label fw-semibold d-block">Color</label>
-            <div class="d-flex gap-2 flex-wrap">
-              <button
-                type="button"
-                class="btn rounded-circle p-3 border"
-              ></button>
-              <button type="button" class="btn rounded-circle p-3 border"></button>
-              <button type="button" class="btn rounded-circle p-3 border"></button>
-              <button type="button" class="btn rounded-circle p-3 border"></button>
-              <button type="button" class="btn rounded-circle p-3 border"></button>
-              <button type="button" class="btn rounded-circle p-3 border"></button>
-              <button type="button" class="btn rounded-circle p-3 border"></button>
-            </div>
+            <label for="color" class="form-label fw-semibold d-block">Color</label>
+            <select name="color" id="color" class="form-select" formControlName="colorFormControl">
+              <option value="danger">Rojo</option>
+              <option value="primary">Azul</option>
+              <option value="warning">Amarillo</option>
+              <option value="success">Verde</option>
+              <option value="info">Celeste</option>
+            </select>
           </div>
 
           <!-- Icono (Emoji) -->
@@ -125,7 +120,6 @@
               class="form-control"
               id="categoryIcon"
               placeholder="😊"
-              maxlength="2"
               formControlName="emojiFormControl"
             />
           </div>
@@ -135,7 +129,7 @@
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
           Cancelar
         </button>
-        <button type="button" class="btn btn-primary">Crear Categoría</button>
+        <button type="button" class="btn btn-primary" (click)="createCategory()" [disabled]="newCategoryForm.invalid">Crear Categoría</button>
       </div>
     </div>
   </div>

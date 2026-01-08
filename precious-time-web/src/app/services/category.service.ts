@@ -21,4 +21,8 @@ export class CategoryService {
     return this.http.get<CategoryListResponse>(`${this.urlBase}/categories`);
   }
 
+  deleteCategory(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.urlBase}/categories/${id}`);
+  }
+
 }
