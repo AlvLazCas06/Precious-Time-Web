@@ -23,7 +23,7 @@ export class UserList implements OnInit {
   userFormGroup = new FormGroup({
     nameFormControl: new FormControl('', [
       Validators.required,
-      Validators.min(2),
+      Validators.minLength(2),
     ]),
     emailFormControl: new FormControl('', [
       Validators.required,
@@ -32,8 +32,13 @@ export class UserList implements OnInit {
     rolFormControl: new FormControl('', [
       Validators.required
     ]),
-    phoneFormControl: new FormControl(),
-    activeFormControl: new FormControl()
+    phoneFormControl: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8)
+    ]),
+    passwordFormcontrol: new FormControl('', [
+      Validators.required
+    ])
   });
 
   constructor(private userService: UserService) { }
@@ -62,6 +67,10 @@ export class UserList implements OnInit {
       this.newUsersMonth = resp.filter(user => user.created_at.slice(5, 7) === this.month.toString().padStart(2, '0')).length;
       this.totalUsers = resp.length;
     });
+  }
+
+  createUser() {
+
   }
 
 }

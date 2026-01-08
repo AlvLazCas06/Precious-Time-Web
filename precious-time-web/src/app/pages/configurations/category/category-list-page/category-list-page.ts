@@ -15,7 +15,9 @@ import { CategoryResponse } from '../../../../models/interfaces/category-respons
 })
 export class CategoryListPage implements OnInit {
 
+  openModal: boolean = false
   categories: CategoryResponse[] = [];
+  category?: CategoryResponse;
   newCategoryForm = new FormGroup({
     nameFormControl: new FormControl('', [
       Validators.required,
@@ -32,7 +34,7 @@ export class CategoryListPage implements OnInit {
     ])
   });
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
     this.categoryService.getCategories().subscribe(resp => {
@@ -55,6 +57,29 @@ export class CategoryListPage implements OnInit {
     this.categoryService.deleteCategory(id).subscribe(resp => {
       window.location.reload();
     });
+  }
+
+  openEditModal(id: number) {
+    this.categoryService.getCategory(id).subscribe(resp => {
+      this.category = resp;
+      this.openModal = true;
+    });
+  }
+
+  modifyCategory() {
+    const editCategory = new CategoryDto(
+      this.newCategoryForm.get('nameFormControl')?.value!,
+      this.newCategoryForm.get('emojiFormControl')?.value!,
+      this.newCategoryForm.get('colorFormControl')?.value!
+    );
+    this.categoryService.editCategory(this.category?.id!, editCategory).subscribe(resp => {
+      window.location.reload();
+      this.openModal = false;
+    });
+  }
+
+  closeModal() {
+    this.openModal = false;
   }
 
 }
