@@ -35,38 +35,6 @@ export class Sidebar implements OnInit {
     });
   }
 
-  toggleTheme() {
-    if (!this.preference) return;
-
-    const newTheme = this.preference.theme === 'dark' ? 'light' : 'dark';
-
-    // Convert number to boolean for DTO if needed
-    const notifActive = this.preference.notifications_active === 1;
-
-    const dto = new EditPreferenceDto(
-      newTheme,
-      notifActive,
-      this.preference.notification_type
-    );
-
-    // Optimistic update
-    this.preference.theme = newTheme;
-    this.applyTheme(newTheme);
-
-    this.preferenceService.editPreference(this.preference.id, dto).subscribe({
-      next: (updated) => {
-        // Success
-      },
-      error: (err) => {
-        console.error('Error updating preference', err);
-        // Revert
-        const oldTheme = newTheme === 'dark' ? 'light' : 'dark';
-        if(this.preference) this.preference.theme = oldTheme;
-        this.applyTheme(oldTheme);
-      }
-    });
-  }
-
   applyTheme(theme: string) {
     document.body.setAttribute('data-bs-theme', theme);
   }

@@ -17,8 +17,8 @@ export class CategoryService {
     return this.http.post<CategoryResponse>(`${this.urlBase}/categories`, category);
   }
 
-  getCategories(): Observable<CategoryListResponse> {
-    return this.http.get<CategoryListResponse>(`${this.urlBase}/categories`);
+  getCategories(numPage: number): Observable<CategoryListResponse> {
+    return this.http.get<CategoryListResponse>(`${this.urlBase}/categories?page=${numPage}`);
   }
 
   getCategory(id: number): Observable<CategoryResponse> {

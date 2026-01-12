@@ -62,11 +62,6 @@
 
     <!-- Footer / Theme Toggle -->
     <div class="p-3 mt-auto border-top border-secondary-subtle">
-        <button class="btn theme-toggle-btn w-100 p-2 rounded-3 d-flex align-items-center justify-content-between mb-2"
-                (click)="toggleTheme()">
-            <span class="small fw-medium">{{ isDarkTheme ? 'Modo Oscuro' : 'Modo Claro' }}</span>
-            <i class="bi" [class.bi-moon-stars-fill]="isDarkTheme" [class.bi-sun-fill]="!isDarkTheme"></i>
-        </button>
         <button class="btn btn-link text-secondary text-decoration-none w-100 d-flex align-items-center justify-content-center gap-2 p-2" (click)="logout()">
             <i class="bi bi-box-arrow-right"></i>
             <span class="small">Cerrar Sesión</span>

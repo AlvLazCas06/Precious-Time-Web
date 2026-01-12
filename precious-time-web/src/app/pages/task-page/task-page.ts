@@ -44,8 +44,8 @@ export class TaskPage implements OnInit {
     this.taskService.getTasks().subscribe(resp => {
       this.taskList = resp;
     });
-    this.categoryService.getCategories().subscribe(resp => {
-      this.categories = resp;
+    this.categoryService.getCategories(1).subscribe(resp => {
+      this.categories = resp.data;
     });
     this.preferenceService.getPreference().subscribe(resp => {
       if (resp && resp.length > 0)

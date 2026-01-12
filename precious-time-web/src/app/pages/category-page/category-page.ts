@@ -17,6 +17,8 @@ import { CategoryDto } from '../../models/dto/category.dto';
 })
 export class CategoryPage implements OnInit {
 
+  currentPageNumber = 1;
+  pagesNumber = 1;
   editCategoryId?: number;
   openModal = false
   categories: CategoryResponse[] = [];
@@ -80,8 +82,12 @@ export class CategoryPage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.categoryService.getCategories().subscribe({
-      next: resp => this.categories = resp
+    this.categoryService.getCategories(this.currentPageNumber).subscribe({
+      next: resp => {
+        this.categories = resp.data;
+        this.pagesNumber = resp.to;
+        this.currentPageNumber = resp.current_page;
+      }
     });
     this.preferenceService.getPreference().subscribe({
       next: resp => this.preference = resp[0]
@@ -137,6 +143,16 @@ export class CategoryPage implements OnInit {
         window.location.reload();
       },
       error: errors => alert('error al editar la categoria')
+    });
+  }
+
+  changePage(number: number) {
+    this.categoryService.getCategories(number).subscribe({
+      next: resp => {
+        this.categories = resp.data;
+        this.currentPageNumber = resp.current_page;
+        window.location.reload;
+      }
     });
   }
 

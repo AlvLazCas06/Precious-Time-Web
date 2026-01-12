@@ -1,5 +1,9 @@
 <app-sidebar></app-sidebar>
-<div class="container-fluid p-4 bg-body min-vh-100" style="margin-left: 250px" [attr.data-bs-theme]="isDarkTheme ? 'dark' : 'light'">
+<div
+  class="container-fluid p-4 bg-body min-vh-100"
+  style="margin-left: 250px"
+  [attr.data-bs-theme]="isDarkTheme ? 'dark' : 'light'"
+>
   <!-- Header Section -->
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
@@ -37,10 +41,18 @@
 
           <div class="category-bar" [style.background-color]="category.color"></div>
           <div class="d-flex justify-content-center gap-2 mt-4">
-            <button class="btn btn-teal btn-sm text-white rounded-circle shadow-sm d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;" (click)="editCategoryModal(category.id)">
+            <button
+              class="btn btn-teal btn-sm text-white rounded-circle shadow-sm d-flex align-items-center justify-content-center"
+              style="width: 38px; height: 38px"
+              (click)="editCategoryModal(category.id)"
+            >
               <i class="bi bi-pencil-square"></i>
             </button>
-            <button class="btn btn-danger-custom btn-sm text-white rounded-circle shadow-sm d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;" (click)="removeCategory(category.id)">
+            <button
+              class="btn btn-danger-custom btn-sm text-white rounded-circle shadow-sm d-flex align-items-center justify-content-center"
+              style="width: 38px; height: 38px"
+              (click)="removeCategory(category.id)"
+            >
               <i class="bi bi-trash2-fill"></i>
             </button>
           </div>
@@ -49,6 +61,15 @@
     </div>
     } @empty {
     <h1>No Hay categorias</h1>
+    } @if (categories.length != 0) {
+    <div class="col">
+      <button (click)="changePage(1)">Inicio</button>
+      @if (currentPageNumber != 1) {
+        <button (click)="changePage(currentPageNumber - 1)">Anterior</button>
+      }
+      <button>Siguiente</button>
+      <button>Fin</button>
+    </div>
     }
   </div>
 
@@ -64,9 +85,7 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header border-0 pb-0">
-          <h5 class="modal-title fw-bold" id="categoryModalLabel">
-            Nueva Categoría
-          </h5>
+          <h5 class="modal-title fw-bold" id="categoryModalLabel">Nueva Categoría</h5>
           <button
             type="button"
             class="btn-close"
@@ -92,7 +111,10 @@
             <!-- Emoji Selector -->
             <div class="mb-4">
               <label class="form-label text-muted small fw-bold">Selecciona un emoji</label>
-              <select class="emoji-grid form-select bg-body-tertiary border-0" formControlName="emojiFormControl">
+              <select
+                class="emoji-grid form-select bg-body-tertiary border-0"
+                formControlName="emojiFormControl"
+              >
                 @for (emoji of emojis; track $index) {
                 <option class="grid-item" [value]="emoji">
                   {{ emoji }}
@@ -104,10 +126,17 @@
             <!-- Color Selector -->
             <div class="mb-4">
               <label class="form-label text-muted small fw-bold">Selecciona un color</label>
-              <select class="form-select bg-body-tertiary border-0" formControlName="colorFormControl">
+              <select
+                class="form-select bg-body-tertiary border-0"
+                formControlName="colorFormControl"
+              >
                 <option [value]="'light'" disabled selected>Selecciona un color</option>
                 @for (color of colors; track $index) {
-                <option [value]="color" [style.background-color]="color" style="color: white; text-shadow: 0 0 2px black;">
+                <option
+                  [value]="color"
+                  [style.background-color]="color"
+                  style="color: white; text-shadow: 0 0 2px black"
+                >
                   {{ color }}
                 </option>
                 }
@@ -137,14 +166,8 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header border-0 pb-0">
-          <h5 class="modal-title fw-bold" id="categoryModalLabel">
-            Editar Categoría
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            (click)="closeModal()"
-          ></button>
+          <h5 class="modal-title fw-bold" id="categoryModalLabel">Editar Categoría</h5>
+          <button type="button" class="btn-close" (click)="closeModal()"></button>
         </div>
         <div class="modal-body p-4">
           <form [formGroup]="editCategoryForm">
@@ -164,7 +187,10 @@
             <!-- Emoji Selector -->
             <div class="mb-4">
               <label class="form-label text-muted small fw-bold">Selecciona un emoji</label>
-              <select class="emoji-grid form-select bg-body-tertiary border-0" formControlName="emojiFormControl">
+              <select
+                class="emoji-grid form-select bg-body-tertiary border-0"
+                formControlName="emojiFormControl"
+              >
                 @for (emoji of emojis; track $index) {
                 <option class="grid-item" [value]="emoji">
                   {{ emoji }}
@@ -176,10 +202,17 @@
             <!-- Color Selector -->
             <div class="mb-4">
               <label class="form-label text-muted small fw-bold">Selecciona un color</label>
-              <select class="form-select bg-body-tertiary border-0" formControlName="colorFormControl">
+              <select
+                class="form-select bg-body-tertiary border-0"
+                formControlName="colorFormControl"
+              >
                 <option [ngValue]="null" disabled selected>Selecciona un color</option>
                 @for (color of colors; track $index) {
-                <option [value]="color" [style.background-color]="color" style="color: white; text-shadow: 0 0 2px black;">
+                <option
+                  [value]="color"
+                  [style.background-color]="color"
+                  style="color: white; text-shadow: 0 0 2px black"
+                >
                   {{ color }}
                 </option>
                 }
