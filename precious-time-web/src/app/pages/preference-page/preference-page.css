@@ -1,0 +1,69 @@
+/* Custom Colors */
+:host {
+    --pt-teal: #00cba9;
+    --pt-teal-hover: #00b395;
+    --pt-purple-bg: #f3e5f5;
+    --pt-purple-text: #ab47bc;
+}
+
+.text-teal {
+    color: var(--pt-teal) !important;
+}
+
+.bg-purple-subtle {
+    background-color: var(--pt-purple-bg) !important;
+}
+
+.text-purple {
+    color: var(--pt-purple-text) !important;
+}
+
+/* Avatar Circle */
+.avatar-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--pt-teal) 0%, #00e5be 100%);
+    box-shadow: 0 4px 15px rgba(0, 203, 169, 0.3);
+}
+
+/* Custom Button */
+.btn-teal {
+    background: linear-gradient(90deg, var(--pt-teal) 0%, #00e5be 100%);
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 203, 169, 0.2);
+}
+
+.btn-teal:hover {
+    background: linear-gradient(90deg, #00b395 0%, #00cba9 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 15px rgba(0, 203, 169, 0.3);
+}
+
+/* Custom Form Controls */
+.form-control:focus {
+    border-color: var(--pt-teal);
+    box-shadow: 0 0 0 0.25rem rgba(0, 203, 169, 0.25);
+    background-color: #fff;
+}
+
+/* Custom Switch */
+.form-check-input:checked {
+    background-color: var(--pt-teal);
+    border-color: var(--pt-teal);
+}
+
+.form-check-input:focus {
+    border-color: #80ebd9;
+    box-shadow: 0 0 0 0.25rem rgba(0, 203, 169, 0.25);
+}
+
+/* Card Hover Effects */
+.card {
+    border-radius: 12px;
+}
+
+.avatar-circle i {
+    font-size: 3.5rem;
+}

@@ -1,0 +1,98 @@
+:host {
+    --pt-teal: #00cba9;
+    --pt-teal-light: #e0f2f1;
+    --pt-purple: #ab47bc;
+    --pt-purple-light: #f3e5f5;
+    --pt-purple-gradient-start: #d1c4e9;
+    --pt-purple-gradient-end: #b39ddb;
+}
+
+/* Utility Classes */
+.text-teal { color: var(--pt-teal) !important; }
+.bg-teal-subtle { background-color: rgba(0, 203, 169, 0.1) !important; }
+.border-teal-subtle { border-color: rgba(0, 203, 169, 0.2) !important; }
+
+.text-purple { color: var(--pt-purple) !important; }
+.bg-purple-subtle { background-color: var(--pt-purple-light) !important; }
+
+/* Custom Button - Teal Gradient */
+.btn-teal {
+    background: linear-gradient(90deg, var(--pt-teal) 0%, #00e5be 100%);
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 203, 169, 0.2);
+}
+
+.btn-teal:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* Type Toggle Buttons */
+.active-type {
+    background: linear-gradient(90deg, #be63f9 0%, #a450e0 100%) !important;
+    color: white !important;
+    box-shadow: 0 4px 10px rgba(171, 71, 188, 0.3);
+}
+
+.active-type i {
+    color: white !important;
+}
+
+/* User List */
+.user-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.user-item {
+    transition: background-color 0.2s ease;
+}
+
+.user-item:hover {
+    background-color: #e9ecef !important;
+}
+.user-item.bg-white {
+    background-color: #fff !important;
+}
+
+.pointer-events-none {
+    pointer-events: none;
+}
+
+/* Inbox Cards */
+.inbox-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.inbox-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1) !important;
+}
+
+.status-strip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background-color: var(--pt-teal);
+}
+
+/* Scrollbar styling for user list */
+.user-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.user-list::-webkit-scrollbar-thumb {
+    background-color: #dee2e6;
+    border-radius: 3px;
+}
+
+/* Card Border Radius matching image */
+.card {
+    border-radius: 12px;
+}

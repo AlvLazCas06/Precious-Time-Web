@@ -1,0 +1,101 @@
+:host {
+    --pt-teal: #00cba9;
+    --pt-teal-gradient: linear-gradient(90deg, #00cba9 0%, #00e5be 100%);
+    --priority-high-bg: #ffebee;
+    --priority-high-text: #e53935;
+    --priority-med-bg: #fff3e0;
+    --priority-med-text: #fb8c00;
+    --priority-low-bg: #f5f5f5;
+    --priority-low-text: #757575;
+    --status-pending-bg: #fff9c4;
+    --status-pending-text: #fbc02d;
+    --status-progress-bg: #e3f2fd;
+    --status-progress-text: #1976d2;
+    --status-completed-bg: #e8f5e9;
+    --status-completed-text: #43a047;
+}
+
+/* Common */
+.btn-teal {
+    background: var(--pt-teal-gradient);
+    border: none;
+    color: white;
+    transition: all 0.2s;
+}
+.btn-teal:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* Search Box (reused style if needed, or simple input) */
+.search-input {
+    background-color: transparent;
+}
+.search-input:focus {
+    box-shadow: none;
+}
+
+/* Card Styles */
+.task-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+}
+.task-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+/* Priority Badges */
+.badge-priority {
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+.badge-priority-high {
+    background-color: var(--priority-high-bg);
+    color: var(--priority-high-text);
+}
+.badge-priority-medium {
+    background-color: var(--priority-med-bg);
+    color: var(--priority-med-text);
+}
+.badge-priority-low {
+    background-color: var(--priority-low-bg);
+    color: var(--priority-low-text);
+}
+
+/* Status Badges */
+.badge-status-pending {
+    background-color: var(--status-pending-bg);
+    color: var(--status-pending-text);
+}
+.badge-status-inprogress {
+    background-color: var(--status-progress-bg);
+    color: var(--status-progress-text);
+}
+.badge-status-completed {
+    background-color: var(--status-completed-bg);
+    color: var(--status-completed-text);
+}
+
+/* Toggle Switch Color */
+.form-check-input:checked {
+    background-color: var(--pt-teal);
+    border-color: var(--pt-teal);
+}
+
+/* Radio buttons for priority in modal usually custom styled, but default bootstrap is fine or we can color them */
+.btn-check:checked + .btn-outline-danger {
+    background-color: var(--priority-high-text);
+    border-color: var(--priority-high-text);
+    color: white;
+}
+.btn-check:checked + .btn-outline-warning {
+    background-color: var(--priority-med-text);
+    border-color: var(--priority-med-text);
+    color: white;
+}
+.btn-check:checked + .btn-outline-secondary {
+    background-color: var(--priority-low-text);
+    border-color: var(--priority-low-text);
+    color: white;
+}

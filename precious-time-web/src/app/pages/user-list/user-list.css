@@ -1,0 +1,143 @@
+:host {
+    --pt-teal: #00cba9;
+    --pt-teal-light: #e0f2f1;
+    --pt-purple: #ab47bc;
+    --pt-purple-light: #f3e5f5;
+}
+
+/* Page Header */
+.text-teal { color: var(--pt-teal) !important; }
+
+/* Teal Button */
+.btn-teal {
+    background: linear-gradient(90deg, var(--pt-teal) 0%, #00e5be 100%);
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 203, 169, 0.2);
+    color: white;
+}
+.btn-teal:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    color: white;
+}
+
+/* Red Button (for Delete actions if needed later) */
+.btn-danger-custom {
+    background: linear-gradient(90deg, #ef4444 0%, #f87171 100%);
+    border: none;
+    color: white;
+}
+
+/* Search Box */
+.search-box {
+    position: relative;
+}
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+}
+.search-input {
+    padding-left: 40px;
+}
+
+/* Table Stylings */
+.table th {
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom-width: 1px;
+}
+.table td {
+    vertical-align: middle;
+    font-size: 0.9rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+/* Avatar */
+.avatar-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--pt-teal), #00e5be);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* Badges */
+.badge-role-admin {
+    background-color: var(--pt-purple-light);
+    color: var(--pt-purple);
+    font-weight: 500;
+}
+.badge-role-user {
+    background-color: #e3f2fd;
+    color: #2196f3;
+    font-weight: 500;
+}
+.badge-role-guest {
+    background-color: #f5f5f5;
+    color: #757575;
+    font-weight: 500;
+}
+
+.badge-status-active {
+    background-color: #e8f5e9;
+    color: #4caf50;
+    font-weight: 500;
+}
+.badge-status-inactive {
+    background-color: #ffebee;
+    color: #f44336;
+    font-weight: 500;
+}
+
+/* Action Buttons */
+.btn-action {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    transition: all 0.2s;
+}
+.btn-action-edit {
+    background-color: #e3f2fd;
+    color: #2196f3;
+}
+.btn-action-edit:hover {
+    background-color: #2196f3;
+    color: white;
+}
+.btn-action-delete {
+    background-color: #ffebee;
+    color: #f44336;
+}
+.btn-action-delete:hover {
+    background-color: #f44336;
+    color: white;
+}
+
+/* Premium Text */
+.text-premium {
+    color: #f59e0b;
+    font-weight: 600;
+}
+
+/* Toggle Switch */
+.form-check-input:checked {
+    background-color: var(--pt-teal);
+    border-color: var(--pt-teal);
+}

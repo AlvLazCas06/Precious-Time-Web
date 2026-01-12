@@ -1,0 +1,103 @@
+:host {
+    --pt-teal: #00cba9;
+    --pt-teal-light: #e0f2f1;
+    --pt-purple: #ab47bc;
+    --pt-purple-light: #f3e5f5;
+    --pt-orange: #ff7043; /* Matches pending icon */
+    --pt-orange-light: #fbe9e7;
+    --pt-blue: #42a5f5; /* Matches notif icon */
+    --pt-blue-light: #e3f2fd;
+}
+
+/* Icons for Stats Cards */
+.icon-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: transform 0.2s;
+}
+.icon-box i {
+    color: white;
+}
+
+.icon-box-teal {
+    background: linear-gradient(135deg, #00cba9 0%, #009688 100%);
+    box-shadow: 0 4px 10px rgba(0, 203, 169, 0.2);
+}
+
+.icon-box-purple {
+    background: linear-gradient(135deg, #ab47bc 0%, #8e24aa 100%);
+    box-shadow: 0 4px 10px rgba(171, 71, 188, 0.2);
+}
+
+.icon-box-orange {
+    background: linear-gradient(135deg, #ff7043 0%, #d84315 100%);
+    box-shadow: 0 4px 10px rgba(255, 112, 67, 0.2);
+}
+
+.icon-box-blue {
+    background: linear-gradient(135deg, #42a5f5 0%, #1976d2 100%);
+    box-shadow: 0 4px 10px rgba(66, 165, 245, 0.2);
+}
+
+.stat-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none;
+    border-radius: 12px;
+}
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.trend-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+.trend-up {
+    color: #2e7d32;
+    background-color: #e8f5e9;
+}
+.trend-down {
+    color: #c62828;
+    background-color: #ffebee;
+}
+
+/* Chart Container */
+.chart-container {
+    height: 300px;
+    position: relative;
+    width: 100%;
+}
+
+/* Activity Items */
+.activity-item {
+    position: relative;
+    padding-left: 20px;
+}
+.activity-icon-container {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.activity-icon-teal { background-color: var(--pt-teal-light); color: var(--pt-teal); }
+.activity-icon-purple { background-color: var(--pt-purple-light); color: var(--pt-purple); }
+.activity-icon-orange { background-color: var(--pt-orange-light); color: var(--pt-orange); }
+.activity-icon-blue { background-color: var(--pt-blue-light); color: var(--pt-blue); }
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+}

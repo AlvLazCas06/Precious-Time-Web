@@ -1,0 +1,104 @@
+<app-sidebar></app-sidebar>
+<div class="container-fluid p-4 bg-body min-vh-100" style="margin-left: 250px" [attr.data-bs-theme]="isDarkTheme ? 'dark' : 'light'">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold text-body-emphasis">Plantillas de Tareas</h2>
+      <p class="text-body-secondary mb-0">Crea y gestiona plantillas de tareas para asignar a usuarios</p>
+    </div>
+    <button
+      class="btn btn-teal px-4 py-2 fw-medium rounded-pill"
+      data-bs-toggle="modal"
+      data-bs-target="#newTaskModal">
+      <i class="bi bi-plus-lg me-2"></i> Nueva Tarea
+    </button>
+  </div>
+
+  <!-- Task Grid -->
+  <div class="row g-4">
+    @for (task of taskList; track task.id) {
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 border-0 shadow-sm task-card bg-body-tertiary">
+        <div class="card-body p-4 d-flex flex-column">
+          <h5 class="fw-bold text-body-emphasis mb-2">{{ task.title }}</h5>
+          <p class="text-body-secondary mb-3 flex-grow-1">{{ task.description }}</p>
+
+          <div class="d-flex gap-2 mb-3">
+            <span class="badge rounded-pill px-3 py-2 border-0 badge-priority"
+                  [ngClass]="getPriorityClass(task.priority)">
+              {{ task.priority }}
+            </span>
+            <span class="badge rounded-pill px-3 py-2 border-0 badge-status"
+                  [ngClass]="getStatusClass(task.status)">
+              {{ task.status }}
+            </span>
+          </div>
+
+          <div class="border-top pt-3 mt-auto">
+            <p class="text-secondary small mb-1">Categoría</p>
+            <p class="fw-medium text-body-emphasis mb-0">{{ getCategoryName(task.category_id) }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    } @empty {
+      <div class="col-12 text-center py-5">
+        <div class="text-body-secondary">
+          <i class="bi bi-list-task display-1 d-block mb-3 opacity-25"></i>
+          <p class="h5">No hay tareas creadas</p>
+        </div>
+      </div>
+    }
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="newTaskModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header border-bottom-0 pb-0">
+          <h5 class="modal-title fw-bold text-body-emphasis">Nueva Tarea</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form [formGroup]="taskFormGroup">
+
+            <!-- Title -->
+            <div class="mb-3">
+              <label class="form-label text-body-secondary small fw-bold">Título de la tarea *</label>
+              <input type="text" class="form-control bg-body-tertiary border-0 py-2"
+                     formControlName="title" placeholder="Ej: Revisar correos diarios">
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+              <label class="form-label text-body-secondary small fw-bold">Descripción *</label>
+              <textarea class="form-control bg-body-tertiary border-0 py-2" rows="3"
+                        formControlName="description" placeholder="Describe los detalles de la tarea..."></textarea>
+            </div>
+
+            <!-- Category -->
+            <div class="mb-4">
+              <label class="form-label text-body-secondary small fw-bold">Categoría *</label>
+              <select class="form-select bg-body-tertiary border-0 py-2" formControlName="category_id">
+                <option [value]="null" disabled selected>Selecciona una categoría</option>
+                @for (cat of categories; track cat.id) {
+                  <option [value]="cat.id">{{ cat.name }}</option>
+                }
+              </select>
+            </div>
+
+          </form>
+        </div>
+        <div class="modal-footer border-top-0 pt-0">
+          <button type="button" class="btn btn-outline-secondary px-4 py-2" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-teal text-white px-4 py-2 fw-medium"
+                  (click)="saveTask()" data-bs-dismiss="modal" [disabled]="taskFormGroup.invalid">
+            Crear Tarea
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

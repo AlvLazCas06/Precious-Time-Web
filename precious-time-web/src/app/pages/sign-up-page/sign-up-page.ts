@@ -55,9 +55,7 @@ export class SignUpPage {
       const token = resp.token;
       localStorage.setItem('token', token);
       localStorage.setItem('user_id', resp.user.id.toString());
-      this.preferenceService.createPreference().subscribe(resp => {
-        localStorage.setItem('preferences', resp.id.toString());
-      });
+      this.preferenceService.createPreference().subscribe();
       alert('No tienes acceso debido a que tu rol creado es de usuario.\nPonte en contacto con el admin para que te cambie el rol.');
       this.router.navigate(['/login']);
 
