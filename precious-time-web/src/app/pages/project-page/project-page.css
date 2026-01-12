@@ -1,0 +1,142 @@
+:host {
+    --pt-teal: #00cba9;
+    --pt-teal-gradient: linear-gradient(90deg, #00cba9 0%, #00e5be 100%);
+
+    /* Status Colors */
+    --status-process-bg: #e3f2fd;
+    --status-process-text: #1976d2;
+    --status-process-bar: #fb8c00; /* Orange bar for process as seen in image */
+
+    --status-completed-bg: #e8f5e9;
+    --status-completed-text: #2e7d32;
+    --status-completed-bar: #00c853;
+
+    --status-pending-bg: #fff9c4;
+    --status-pending-text: #fbc02d;
+    --status-pending-bar: #bdbdbd; /* Grey bar for pending */
+
+    --status-cancelled-bg: #ffcdd2;
+    --status-cancelled-text: #c62828;
+    --status-cancelled-bar: #e53935;
+}
+
+/* Common */
+.btn-teal {
+    background: var(--pt-teal-gradient);
+    border: none;
+    color: white;
+    transition: all 0.2s;
+}
+.btn-teal:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+}
+
+/* Search Box */
+.search-box {
+    position: relative;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+}
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9e9e9e;
+}
+.search-input {
+    padding-left: 45px;
+    height: 48px;
+    background: transparent;
+}
+.search-input:focus {
+    box-shadow: none;
+    border-color: var(--pt-teal);
+}
+
+/* Table Styles */
+.table th {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #757575;
+}
+.table td {
+    vertical-align: middle;
+    font-size: 0.9rem;
+}
+
+/* Status Badges */
+.badge-status-process {
+    background-color: var(--status-process-bg);
+    color: var(--status-process-text);
+}
+.badge-status-completed {
+    background-color: var(--status-completed-bg);
+    color: var(--status-completed-text);
+}
+.badge-status-pending {
+    background-color: var(--status-pending-bg);
+    color: var(--status-pending-text);
+}
+.badge-status-cancelled {
+    background-color: var(--status-cancelled-bg);
+    color: var(--status-cancelled-text);
+}
+
+/* Progress Bar */
+.progress {
+    height: 6px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    width: 100px;
+}
+.progress-bar {
+    border-radius: 10px;
+}
+
+/* Summary Cards (Bottom) */
+.summary-card {
+    border-radius: 12px;
+    border: none;
+    transition: transform 0.2s;
+}
+.summary-card:hover {
+    transform: translateY(-3px);
+}
+
+/* Summary Colors */
+.card-pending { background-color: #fffde7; }
+.card-pending .count { color: #f9a825; }
+.card-pending .icon-box { background-color: #fff9c4; color: #f9a825; }
+
+.card-process { background-color: #e3f2fd; }
+.card-process .count { color: #1565c0; }
+.card-process .icon-box { background-color: #bbdefb; color: #1565c0; }
+
+.card-completed { background-color: #e8f5e9; }
+.card-completed .count { color: #2e7d32; }
+.card-completed .icon-box { background-color: #c8e6c9; color: #2e7d32; }
+
+.card-cancelled { background-color: #ffebee; }
+.card-cancelled .count { color: #c62828; }
+.card-cancelled .icon-box { background-color: #ffcdd2; color: #c62828; }
+
+.count {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.icon-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}

@@ -1,135 +1,188 @@
 <app-sidebar></app-sidebar>
-<div class="container-fluid p-4" style="margin-left: 250px;">
-    <!-- Header -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <h2 class="fw-bold mb-1">Panel de Control</h2>
-            <p class="text-muted mb-0">Vista general del rendimiento y actividad de Precious Time</p>
-        </div>
+<div class="container-fluid p-4 bg-body min-vh-100" style="margin-left: 250px" [attr.data-bs-theme]="isDarkTheme ? 'dark' : 'light'">
+
+  <!-- Header -->
+  <div class="mb-4">
+    <div class="d-flex align-items-center gap-3">
+        <h2 class="fw-bold text-body-emphasis mb-0">Panel Principal</h2>
     </div>
+    <p class="text-body-secondary mt-1">Resumen general de la plataforma Precious Time</p>
+  </div>
 
-    <!-- Tarjetas de métricas principales -->
-    <div class="row g-3 mb-4">
-        <div class="col-12 col-sm-6 col-lg-3">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <span class="text-muted small">Usuarios Activos</span>
-                        <i class="bi bi-people text-muted"></i>
-                    </div>
-                    <h3 class="fw-bold mb-1">{{ usersActive }}</h3>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-sm-6 col-lg-3">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <span class="text-muted small">Tareas Completadas</span>
-                        <i class="bi bi-check-circle text-muted"></i>
-                    </div>
-                    <h3 class="fw-bold mb-1">{{ taskDone }}</h3>
-                </div>
-            </div>
-        </div>
-    </div>
+  <!-- Summary Cards -->
+  <div class="row g-4 mb-4">
 
-    <!-- Gráficos -->
-    <div class="row g-3 mb-4">
-        <!-- Gráfico de área - Actividad Semanal -->
-        <div class="col-12 col-lg-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body">
-                    <h5 class="fw-semibold mb-1">Actividad Semanal</h5>
-                    <p class="text-muted small mb-4">Horas trabajadas y tareas completadas por día</p>
-                    <div class="bg-light rounded-3 p-4">
-                        <div class="text-center text-muted py-5">
-                            <i class="bi bi-activity fs-1 mb-3 d-block"></i>
-                            <p class="mb-0">Gráfico de área</p>
-                            <small>Actividad de Lun a Dom</small>
-                        </div>
+    <!-- Users Card -->
+    <div class="col-md-3">
+        <div class="card stat-card bg-body-tertiary h-100">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <p class="text-body-secondary small mb-1">Total Usuarios</p>
+                        <h2 class="stat-value text-body-emphasis mb-0">{{ totalUsers }}</h2>
+                        <span class="trend-badge trend-up">
+                            <i class="bi bi-arrow-up-short"></i> +12.5%
+                        </span>
+                    </div>
+                    <div class="icon-box icon-box-teal">
+                        <i class="bi bi-people"></i>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Gráfico de pastel - Distribución por Categorías -->
-        <div class="col-12 col-lg-6">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-body">
-                    <h5 class="fw-semibold mb-1">Distribución por Categorías</h5>
-                    <p class="text-muted small mb-4">Tiempo invertido por tipo de actividad</p>
-                    <div class="bg-light rounded-3 p-4">
-                        <div class="text-center text-muted py-5">
-                            <i class="bi bi-pie-chart fs-1 mb-3 d-block"></i>
-                            <p class="mb-0">Gráfico de pastel</p>
-                            <div class="mt-3">
-                                <span class="badge bg-primary me-2">Trabajo: 42%</span>
-                                <span class="badge bg-success me-2">Personal: 25%</span>
-                                <span class="badge bg-warning me-2">Estudio: 20%</span>
-                                <span class="badge bg-danger">Ejercicio: 9%</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="d-flex justify-content-between pt-2 border-top border-secondary-subtle">
+                    <small class="text-body-secondary">Activos: {{ activeUsers }}</small>
+                    <small class="text-teal fw-medium">Premium: {{ premiumUsers }}</small>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Actividad Reciente -->
-    <div class="row">
-        <div class="col-12">
-            <div class="card border-0 shadow-sm">
-                <div class="card-body">
-                    <h5 class="fw-semibold mb-1">Actividad Reciente</h5>
-                    <p class="text-muted small mb-4">Últimas acciones de los usuarios</p>
-
-                    <!-- Lista de actividades -->
-                    <div class="list-group list-group-flush">
-                        <div class="list-group-item border-0 px-0 d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                                    <i class="bi bi-person-circle text-primary fs-5"></i>
-                                </div>
-                                <div>
-                                    <div class="fw-semibold">María García</div>
-                                    <small class="text-muted">completó 5 tareas</small>
-                                    <div><small class="text-muted">hace 2 min</small></div>
-                                </div>
-                            </div>
-                            <span class="badge bg-success rounded-pill">Completado</span>
-                        </div>
-
-                        <div class="list-group-item border-0 px-0 d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                                    <i class="bi bi-person-circle text-primary fs-5"></i>
-                                </div>
-                                <div>
-                                    <div class="fw-semibold">Juan Pérez</div>
-                                    <small class="text-muted">creó un nuevo proyecto</small>
-                                    <div><small class="text-muted">hace 12 min</small></div>
-                                </div>
-                            </div>
-                            <span class="badge bg-primary rounded-pill">Actualizado</span>
-                        </div>
-
-                        <div class="list-group-item border-0 px-0 d-flex justify-content-between align-items-center">
-                            <div class="d-flex align-items-center gap-3">
-                                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
-                                    <i class="bi bi-person-circle text-primary fs-5"></i>
-                                </div>
-                                <div>
-                                    <div class="fw-semibold">Carlos López</div>
-                                    <small class="text-muted">actualizó la configuración</small>
-                                    <div><small class="text-muted">hace 2 horas</small></div>
-                                </div>
-                            </div>
-                            <span class="badge bg-primary rounded-pill">Actualizado</span>
-                        </div>
+    <!-- Projects Card -->
+    <div class="col-md-3">
+        <div class="card stat-card bg-body-tertiary h-100">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <p class="text-body-secondary small mb-1">Total Proyectos</p>
+                        <h2 class="stat-value text-body-emphasis mb-0">{{ totalProjects }}</h2>
+                        <span class="trend-badge trend-up">
+                            <i class="bi bi-arrow-up-short"></i> +8.2%
+                        </span>
                     </div>
+                    <div class="icon-box icon-box-purple">
+                        <i class="bi bi-folder"></i>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between pt-2 border-top border-secondary-subtle">
+                    <small class="text-body-secondary">Activos: 892</small>
+                    <small class="text-purple fw-medium" style="color: var(--pt-purple)">Completados: {{ completedProjects }}</small>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Tasks Card -->
+    <div class="col-md-3">
+        <div class="card stat-card bg-body-tertiary h-100">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <p class="text-body-secondary small mb-1">Tareas Pendientes</p>
+                        <h2 class="stat-value text-body-emphasis mb-0">{{ pendingTasks }}</h2>
+                        <span class="trend-badge trend-down">
+                            <i class="bi bi-arrow-down-short"></i> -3.1%
+                        </span>
+                    </div>
+                    <div class="icon-box icon-box-orange">
+                        <i class="bi bi-list-task"></i>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between pt-2 border-top border-secondary-subtle">
+                    <small style="color: #e53935">Alta: {{ highPriority }}</small>
+                    <small style="color: #fb8c00">Media: {{ medPriority }}</small>
+                    <small class="text-body-secondary">Baja: {{ lowPriority }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notifications Card -->
+    <div class="col-md-3">
+        <div class="card stat-card bg-body-tertiary h-100">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <p class="text-body-secondary small mb-1">Notificaciones Sistema</p>
+                        <h2 class="stat-value text-body-emphasis mb-0">{{ notifications }}</h2>
+                        <span class="trend-badge trend-up">
+                            <i class="bi bi-arrow-up-short"></i> +5.0%
+                        </span>
+                    </div>
+                    <div class="icon-box icon-box-blue">
+                        <i class="bi bi-bell"></i>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between pt-2 border-top border-secondary-subtle">
+                    <small class="text-body-secondary">No leídas: {{ notificationsUnread }}</small>
+                    <small class="text-primary fw-medium">Leídas: {{ notifications - notificationsUnread }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Chart Section -->
+  <div class="card border-0 shadow-sm mb-4 bg-body-tertiary">
+      <div class="card-body p-4">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+              <div>
+                  <h5 class="fw-bold text-body-emphasis mb-1">Crecimiento de Usuarios</h5>
+                  <p class="text-body-secondary small mb-0">Registros de los últimos 7 meses</p>
+              </div>
+              <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill border border-success-subtle">
+                  <i class="bi bi-graph-up-arrow me-1"></i> +376% este año
+              </span>
+          </div>
+
+          <!-- Mock Chart SVG -->
+          <div class="chart-container w-100" style="height: 300px;">
+             <!-- Decorative SVG to mimic the line chart -->
+             <svg width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 800 300">
+                <!-- Grid lines -->
+                <line x1="0" y1="50" x2="800" y2="50" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4" />
+                <line x1="0" y1="125" x2="800" y2="125" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4" />
+                <line x1="0" y1="200" x2="800" y2="200" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4" />
+                <line x1="0" y1="275" x2="800" y2="275" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="4" />
+
+                <!-- Chart Line -->
+                <path d="M 50 250 L 150 220 L 250 190 L 350 160 L 450 130 L 550 100 L 650 70 L 750 40"
+                      fill="none" stroke="#00cba9" stroke-width="3" />
+
+                <!-- Data Points -->
+                <circle cx="50" cy="250" r="5" fill="#00cba9" />
+                <circle cx="150" cy="220" r="5" fill="#00cba9" />
+                <circle cx="250" cy="190" r="5" fill="#00cba9" />
+                <circle cx="350" cy="160" r="5" fill="#00cba9" />
+                <circle cx="450" cy="130" r="5" fill="#00cba9" />
+                <circle cx="550" cy="100" r="5" fill="#00cba9" />
+                <circle cx="650" cy="70" r="5" fill="#00cba9" />
+                <circle cx="750" cy="40" r="5" fill="#00cba9" />
+
+                <!-- X Axis Labels (Approx) -->
+                <text x="50" y="295" fill="#9e9e9e" font-size="12" text-anchor="middle">Ene</text>
+                <text x="150" y="295" fill="#9e9e9e" font-size="12" text-anchor="middle">Feb</text>
+                <text x="250" y="295" fill="#9e9e9e" font-size="12" text-anchor="middle">Mar</text>
+                <text x="350" y="295" fill="#9e9e9e" font-size="12" text-anchor="middle">Abr</text>
+                <text x="450" y="295" fill="#9e9e9e" font-size="12" text-anchor="middle">May</text>
+                <text x="550" y="295" fill="#9e9e9e" font-size="12" text-anchor="middle">Jun</text>
+                <text x="650" y="295" fill="#9e9e9e" font-size="12" text-anchor="middle">Jul</text>
+             </svg>
+          </div>
+      </div>
+  </div>
+
+  <!-- Recet Activity -->
+  <div class="card border-0 shadow-sm bg-body-tertiary">
+      <div class="card-body p-4">
+          <h5 class="fw-bold text-body-emphasis mb-4">Actividad Reciente</h5>
+
+          <div class="d-flex flex-column gap-4">
+              @for (activity of recentActivities; track activity.text) {
+              <div class="d-flex gap-3 align-items-center activity-item">
+                  <div class="activity-icon-container"
+                       [class.activity-icon-teal]="activity.color === 'teal'"
+                       [class.activity-icon-purple]="activity.color === 'purple'"
+                       [class.activity-icon-orange]="activity.color === 'orange'"
+                       [class.activity-icon-blue]="activity.color === 'blue'">
+                      <i class="bi" [class]="activity.icon"></i>
+                  </div>
+                  <div>
+                      <p class="mb-0 text-body-emphasis fw-medium">{{ activity.text }}</p>
+                      <small class="text-body-secondary">{{ activity.time }}</small>
+                  </div>
+              </div>
+              }
+          </div>
+      </div>
+  </div>
+
 </div>

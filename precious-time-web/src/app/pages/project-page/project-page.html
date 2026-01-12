@@ -1,0 +1,185 @@
+<app-sidebar></app-sidebar>
+<div class="container-fluid p-4 bg-body min-vh-100" style="margin-left: 250px" [attr.data-bs-theme]="isDarkTheme ? 'dark' : 'light'">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold text-body-emphasis">Gestión de Proyectos</h2>
+      <p class="text-body-secondary mb-0">Administra y supervisa todos los proyectos de la plataforma</p>
+    </div>
+    <button
+      class="btn btn-teal px-4 py-2 fw-medium rounded-pill"
+      data-bs-toggle="modal"
+      data-bs-target="#newProjectModal">
+      <i class="bi bi-plus-lg me-2"></i> Nuevo Proyecto
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table mb-0">
+          <thead class="bg-body-tertiary">
+            <tr>
+              <th class="ps-4 py-3 border-0">ID</th>
+              <th class="py-3 border-0">NOMBRE DEL PROYECTO</th>
+              <th class="py-3 border-0" style="width: 30%;">DESCRIPCIÓN</th>
+              <th class="py-3 border-0">FECHA INICIO</th>
+              <th class="py-3 border-0">FECHA FIN</th>
+              <th class="py-3 border-0">ESTADO</th>
+              <th class="py-3 border-0 pe-4">PROGRESO</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (project of projects; track project.id) {
+            <tr>
+              <td class="ps-4 text-secondary small">#{{ project.id }}</td>
+              <td>
+                <span class="fw-bold text-body-emphasis d-block">{{ project.name.split(' ').slice(0,2).join(' ') }}...</span>
+                <!-- Truncating title visually or handled by CSS if needed, purely assuming structure -->
+              </td>
+              <td class="text-body-secondary small">{{ project.description }}</td>
+              <td class="text-body-secondary small"><i class="bi bi-calendar me-1"></i> {{ project.start_date }}</td>
+              <td class="text-body-secondary small"><i class="bi bi-calendar me-1"></i> {{ project.finish_date }}</td>
+              <td>
+                <span class="badge rounded-pill px-3 py-2 border-0 fw-normal"
+                      [ngClass]="getStatusClass(project.status)">
+                  {{ project.status }}
+                </span>
+              </td>
+              <td class="pe-4">
+                <div class="d-flex align-items-center gap-2">
+                  <div class="progress flex-grow-1">
+                    <div class="progress-bar" role="progressbar"
+                         [style.width.%]="project.progress"
+                         [style.background-color]="getProgressColor(project.status)"></div>
+                  </div>
+                  <span class="small fw-bold text-body-emphasis">{{ project.progress }}%</span>
+                </div>
+              </td>
+            </tr>
+            } @empty {
+              <tr>
+                <td colspan="7" class="text-center py-5 text-muted">No projects found.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="row g-4">
+    <!-- Pendientes -->
+    <div class="col-md-3">
+      <div class="card summary-card card-pending h-100">
+        <div class="card-body p-4 d-flex justify-content-between align-items-center">
+          <div>
+            <p class="text-body-secondary mb-1">Pendientes</p>
+            <span class="count">{{ pendingCount }}</span>
+          </div>
+          <div class="icon-box">
+            <i class="bi bi-calendar-event"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- En Proceso -->
+    <div class="col-md-3">
+      <div class="card summary-card card-process h-100">
+        <div class="card-body p-4 d-flex justify-content-between align-items-center">
+          <div>
+            <p class="text-body-secondary mb-1">En Proceso</p>
+            <span class="count">{{ processCount }}</span>
+          </div>
+          <div class="icon-box">
+            <i class="bi bi-arrow-repeat"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Completados -->
+    <div class="col-md-3">
+      <div class="card summary-card card-completed h-100">
+        <div class="card-body p-4 d-flex justify-content-between align-items-center">
+          <div>
+            <p class="text-body-secondary mb-1">Completados</p>
+            <span class="count">{{ completedCount }}</span>
+          </div>
+          <div class="icon-box">
+            <i class="bi bi-check-lg"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cancelados -->
+    <div class="col-md-3">
+      <div class="card summary-card card-cancelled h-100">
+        <div class="card-body p-4 d-flex justify-content-between align-items-center">
+          <div>
+            <p class="text-body-secondary mb-1">Cancelados</p>
+            <span class="count">{{ cancelledCount }}</span>
+          </div>
+          <div class="icon-box">
+            <i class="bi bi-x-lg"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="newProjectModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header border-bottom-0 pb-0">
+          <h5 class="modal-title fw-bold text-body-emphasis">Nuevo Proyecto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4">
+          <form [formGroup]="projectFormGroup">
+
+            <!-- Name -->
+            <div class="mb-3">
+              <label class="form-label text-body-secondary small fw-bold">Nombre del Proyecto *</label>
+              <input type="text" class="form-control bg-body-tertiary border-0 py-2"
+                     formControlName="nameFormControl" placeholder="Ej: Rediseño de la aplicación móvil">
+            </div>
+
+            <!-- Description -->
+            <div class="mb-4">
+              <label class="form-label text-body-secondary small fw-bold">Descripción *</label>
+              <textarea class="form-control bg-body-tertiary border-0 py-2" rows="4"
+                        formControlName="descriptionFormControl" placeholder="Describe los objetivos y alcance del proyecto..."></textarea>
+            </div>
+
+             <!-- Progress Slider (Visual addition based on mock modal) -->
+             <div class="mb-3">
+               <div class="d-flex justify-content-between align-items-center mb-2">
+                 <label class="form-label text-body-secondary small fw-bold mb-0">Progreso del Proyecto</label>
+                 <span class="fw-bold fs-5 text-body-emphasis">
+                   {{ projectFormGroup.get('progressFormControl')?.value || 0 }}<small class="fs-6">%</small>
+                 </span>
+               </div>
+               <input type="range" class="form-range" min="0" max="100" formControlName="progressFormControl">
+             </div>
+
+          </form>
+        </div>
+        <div class="modal-footer border-top-0 pt-0">
+          <button type="button" class="btn btn-outline-secondary px-4 py-2" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-teal text-white px-4 py-2 fw-medium"
+                  (click)="createProject()" data-bs-dismiss="modal" [disabled]="projectFormGroup.invalid">
+            Crear Proyecto
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

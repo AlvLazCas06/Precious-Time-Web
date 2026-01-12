@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PreferenceResponse } from '../models/interfaces/preference-response.interface';
+import { Preference, PreferenceResponse } from '../models/interfaces/preference-response.interface';
+import { EditPreferenceDto } from '../models/dto/edit-preference.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,11 @@ export class PreferenceService {
   }
 
   getPreference(): Observable<PreferenceResponse> {
-    return this.http.get<PreferenceResponse>(`${this.urlBase}/preference/${localStorage.getItem('preferences')}`);
+    return this.http.get<PreferenceResponse>(`${this.urlBase}/preference`);
+  }
+
+  editPreference(id: number, editPreference: EditPreferenceDto): Observable<Preference> {
+    return this.http.put<Preference>(`${this.urlBase}/preference/${id}`, editPreference);
   }
 
 }
