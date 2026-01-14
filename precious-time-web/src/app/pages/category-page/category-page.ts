@@ -17,10 +17,12 @@ import { CategoryDto } from '../../models/dto/category.dto';
 })
 export class CategoryPage implements OnInit {
 
+  nextPage?: string
   currentPageNumber = 1;
   pagesNumber = 1;
   editCategoryId?: number;
   openModal = false
+  loading: boolean = true
   categories: CategoryResponse[] = [];
   preference?: Preference;
   newCategoryForm = new FormGroup({
@@ -87,10 +89,14 @@ export class CategoryPage implements OnInit {
         this.categories = resp.data;
         this.pagesNumber = resp.to;
         this.currentPageNumber = resp.current_page;
+        this.nextPage = resp.next_page_url
       }
     });
     this.preferenceService.getPreference().subscribe({
-      next: resp => this.preference = resp[0]
+      next: resp => {
+        this.preference = resp[0];
+        this.loading = false
+      }
     })
   }
 
@@ -151,6 +157,7 @@ export class CategoryPage implements OnInit {
       next: resp => {
         this.categories = resp.data;
         this.currentPageNumber = resp.current_page;
+        this.loading = false
         window.location.reload;
       }
     });

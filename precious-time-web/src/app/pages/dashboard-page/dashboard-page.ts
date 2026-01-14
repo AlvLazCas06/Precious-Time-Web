@@ -7,6 +7,7 @@ import { Task } from '../../models/interfaces/task-list-response.interface';
 import { User } from '../../models/interfaces/user-list-response.interface';
 import { Preference } from '../../models/interfaces/preference-response.interface';
 import { PreferenceService } from '../../services/preference.service';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -19,14 +20,15 @@ export class DashboardPage implements OnInit {
 
   // Stats
   totalUsers = 0;
-  totalProjects = 1248; // Mock data to match image since we don't have project count endpoint yet or service connected fully in this snippet
+  totalProjects = 0; // Mock data to match image since we don't have project count endpoint yet or service connected fully in this snippet
   pendingTasks = 0;
   notifications = 24; // Mock
 
   // Breakdowns
   activeUsers = 0;
-  premiumUsers = 89; // Mock
-  completedProjects = 356; // Mock
+  premiumUsers = 0; // Mock
+  completedProjects = 0; // Mock
+  activeProjects = 0;
 
   // Task Priorities (Mock or calculated)
   highPriority = 89;
@@ -53,7 +55,8 @@ export class DashboardPage implements OnInit {
   constructor(
     private taskService: TaskService,
     private userService: UserService,
-    private preferenceService: PreferenceService
+    private preferenceService: PreferenceService,
+    private projectService: ProjectService
   ) { }
 
   ngOnInit(): void {
@@ -67,6 +70,14 @@ export class DashboardPage implements OnInit {
       this.medPriority = resp.filter(t => t.priority === 'Media' && t.status === 'Pendiente').length;
       this.lowPriority = resp.filter(t => t.priority === 'Baja' && t.status === 'Pendiente').length;
       this.highPriority = resp.filter(t => t.priority === 'Alta' && t.status === 'Pendiente').length;
+    });
+
+    this.projectService.getProjects().subscribe({
+      next: resp => {
+        this.totalProjects = resp.length;
+        this.completedProjects = resp.filter(p => p.status == 'completado').length;
+        this.activeProjects = resp.filter(p => p.status != 'cancelado').length;
+      }
     });
 
     this.preferenceService.getPreference().subscribe(resp => {
