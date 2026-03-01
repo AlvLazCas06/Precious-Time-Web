@@ -9,16 +9,16 @@ import { CreateTaskDto } from '../models/dto/create-task.dto';
 })
 export class TaskService {
 
-  urlBase = 'http://127.0.0.1:8000/api';
+  urlBase = 'http://localhost:8080/api/v1/tasks';
 
   constructor(private http: HttpClient) {}
 
   getTasks(): Observable<TaskListResponse> {
-    return this.http.get<TaskListResponse>(`${this.urlBase}/tasks`);
+    return this.http.get<TaskListResponse>(`${this.urlBase}/admin`);
   }
 
   createTask(task: CreateTaskDto): Observable<Task> {
-    return this.http.post<Task>(`${this.urlBase}/tasks`, null);
+    return this.http.post<Task>(`${this.urlBase}`, null);
   }
 
 }

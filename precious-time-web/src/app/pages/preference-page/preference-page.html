@@ -13,10 +13,10 @@
           <div class="avatar-circle mb-3 d-flex align-items-center justify-content-center">
             <i class="bi bi-person text-white display-4"></i>
           </div>
-          <h5 class="fw-bold mb-1 text-body-emphasis">{{ user?.name }}</h5>
+          <h5 class="fw-bold mb-1 text-body-emphasis">{{ user?.fullName }}</h5>
           <p class="text-muted mb-3">{{ user?.email }}</p>
           <span class="badge rounded-pill bg-purple-subtle text-purple px-3 py-2">
-            <i class="bi bi-shield-lock me-1"></i> {{ user?.role }}
+            <i class="bi bi-shield-lock me-1"></i> {{ user?.roles }}
           </span>
         </div>
       </div>
@@ -36,7 +36,7 @@
           <form [formGroup]="editUserFormGroup">
             <div class="mb-3">
               <label for="fullName" class="form-label text-muted small">Nombre completo</label>
-              <input type="text" class="form-control bg-body-tertiary border-0" id="fullName" name="fullName" [value]="user?.name" formControlName="nameFormControl">
+              <input type="text" class="form-control bg-body-tertiary border-0" id="fullName" name="fullName" [value]="user?.fullName" formControlName="nameFormControl">
             </div>
             <div class="mb-3">
               <label for="email" class="form-label text-muted small">Email</label>
@@ -100,9 +100,8 @@
               <label for="notifType" class="form-label fw-bold text-body-emphasis">Tipo de Notificación</label>
               <select class="form-select bg-body-tertiary border-0" id="notifType" formControlName="notificationTypeFormControl">
                 <option value="" disabled selected>Selecciona un tipo</option>
-                <option value="email">Email</option>
-                <option value="in_app">En Aplicación</option>
-                <option value="sms">SMS</option>
+                <option value="EMAIL">Email</option>
+                <option value="IN_APP">En Aplicación</option>
               </select>
               <p class="text-muted small mt-1">Elige el método principal para recibir alertas</p>
             </div>

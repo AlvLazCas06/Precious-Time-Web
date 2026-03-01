@@ -9,16 +9,16 @@ import { CategoryDto } from '../models/dto/category.dto';
 })
 export class CategoryService {
 
-  urlBase = 'http://127.0.0.1:8000/api';
+  urlBase = 'http://localhost:8080/api/v1/categories';
 
   constructor(private http: HttpClient) { }
 
   createCategory(category: CategoryDto): Observable<CategoryResponse> {
-    return this.http.post<CategoryResponse>(`${this.urlBase}/categories`, category);
+    return this.http.post<CategoryResponse>(`${this.urlBase}/admin`, category);
   }
 
   getCategories(numPage: number): Observable<CategoryListResponse> {
-    return this.http.get<CategoryListResponse>(`${this.urlBase}/categories?page=${numPage}`);
+    return this.http.get<CategoryListResponse>(`${this.urlBase}`);
   }
 
   getCategory(id: number): Observable<CategoryResponse> {
@@ -30,7 +30,7 @@ export class CategoryService {
   }
 
   editCategory(id: number, editCategory: CategoryDto): Observable<CategoryResponse> {
-    return this.http.put<CategoryResponse>(`${this.urlBase}/categories/${id}`, editCategory);
+    return this.http.put<CategoryResponse>(`${this.urlBase}/admin/${id}`, editCategory);
   }
 
 }

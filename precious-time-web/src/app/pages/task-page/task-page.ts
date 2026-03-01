@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angula
 import { Sidebar } from '../../layouts/admin-layout-component/sidebar/sidebar'; // Import Sidebar
 import { Task } from '../../models/interfaces/task-list-response.interface';
 import { CategoryResponse } from '../../models/interfaces/category-response.interface';
-import { Preference } from '../../models/interfaces/preference-response.interface';
+import { PreferenceResponse } from '../../models/interfaces/preference-response.interface';
 import { TaskService } from '../../services/task.service';
 import { CategoryService } from '../../services/category.service';
 import { PreferenceService } from '../../services/preference.service';
@@ -21,7 +21,7 @@ export class TaskPage implements OnInit {
 
   taskList: Task[] = [];
   categories: CategoryResponse[] = [];
-  preference?: Preference;
+  preference?: PreferenceResponse;
 
   // Form Group for Modal
   taskFormGroup = new FormGroup({
@@ -42,14 +42,13 @@ export class TaskPage implements OnInit {
 
   getAllData() {
     this.taskService.getTasks().subscribe(resp => {
-      this.taskList = resp;
+      this.taskList = resp.content;
     });
     this.categoryService.getCategories(1).subscribe(resp => {
-      this.categories = resp.data;
+      this.categories = resp.content;
     });
     this.preferenceService.getPreference().subscribe(resp => {
-      if (resp && resp.length > 0)
-        this.preference = resp[0];
+        this.preference = resp;
     });
   }
 

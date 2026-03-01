@@ -5,7 +5,7 @@ import { Sidebar } from '../../layouts/admin-layout-component/sidebar/sidebar';
 import { User } from '../../models/interfaces/user-list-response.interface';
 import { UserService } from '../../services/user.service';
 import { PreferenceService } from '../../services/preference.service';
-import { Preference } from '../../models/interfaces/preference-response.interface';
+import { PreferenceResponse } from '../../models/interfaces/preference-response.interface';
 import { CreateReminderDto } from '../../models/dto/create-reminder.dto';
 import { ReminderService } from '../../services/reminder.service';
 import { ReminderResponse } from '../../models/interfaces/reminder-list-response.interface';
@@ -20,7 +20,7 @@ import { ReminderResponse } from '../../models/interfaces/reminder-list-response
 export class NotificationsPage implements OnInit {
 
   userList: User[] = [];
-  preference?: Preference;
+  preference?: PreferenceResponse;
   reminderList: ReminderResponse[] = [];
   noRead = 0
   notificationFormGroup = new FormGroup({
@@ -48,7 +48,7 @@ export class NotificationsPage implements OnInit {
       error: error => alert('No hay usuarios')
     });
     this.preferenceService.getPreference().subscribe({
-      next: resp => this.preference = resp[0],
+      next: resp => this.preference = resp,
       error: errors => alert('error al cargar las preferencias')
     });
     this.reminderService.getNotifiactions().subscribe({

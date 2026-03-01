@@ -1,12 +1,12 @@
 export class EditPreferenceDto {
   theme: string;
-  notifications_active: boolean;
-  notification_type: string
+  notificationsActive: boolean;
+  type: string
 
-  constructor(theme: string, notifications_active: boolean, notification_type: string) {
+  constructor(theme: string, notificationsActive: boolean, type: string) {
     this.theme = theme;
-    this.notifications_active = notifications_active;
-    this.notification_type = notification_type
+    this.notificationsActive = notificationsActive;
+    this.type = type
   }
 
 }

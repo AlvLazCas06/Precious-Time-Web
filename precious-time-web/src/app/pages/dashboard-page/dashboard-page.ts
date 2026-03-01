@@ -5,7 +5,7 @@ import { TaskService } from '../../services/task.service';
 import { UserService } from '../../services/user.service';
 import { Task } from '../../models/interfaces/task-list-response.interface';
 import { User } from '../../models/interfaces/user-list-response.interface';
-import { Preference } from '../../models/interfaces/preference-response.interface';
+import { PreferenceResponse } from '../../models/interfaces/preference-response.interface';
 import { PreferenceService } from '../../services/preference.service';
 import { ProjectService } from '../../services/project.service';
 
@@ -37,7 +37,7 @@ export class DashboardPage implements OnInit {
 
   notificationsUnread = 8;
 
-  preference?: Preference;
+  preference?: PreferenceResponse;
 
   // Chart data (simple array for SVG generation or just placeholder)
   // We will simulate a line graph with a path
@@ -66,22 +66,22 @@ export class DashboardPage implements OnInit {
     });
 
     this.taskService.getTasks().subscribe(resp => {
-      this.pendingTasks = resp.filter(t => t.status === 'Pendiente').length;
-      this.medPriority = resp.filter(t => t.priority === 'Media' && t.status === 'Pendiente').length;
-      this.lowPriority = resp.filter(t => t.priority === 'Baja' && t.status === 'Pendiente').length;
-      this.highPriority = resp.filter(t => t.priority === 'Alta' && t.status === 'Pendiente').length;
+      this.pendingTasks = resp.content.filter(t => t.status === 'Pendiente').length;
+      this.medPriority = resp.content.filter(t => t.priority === 'Media' && t.status === 'Pendiente').length;
+      this.lowPriority = resp.content.filter(t => t.priority === 'Baja' && t.status === 'Pendiente').length;
+      this.highPriority = resp.content.filter(t => t.priority === 'Alta' && t.status === 'Pendiente').length;
     });
 
     this.projectService.getProjects().subscribe({
       next: resp => {
-        this.totalProjects = resp.length;
-        this.completedProjects = resp.filter(p => p.status == 'completado').length;
-        this.activeProjects = resp.filter(p => p.status != 'cancelado').length;
+        this.totalProjects = resp.content.length;
+        this.completedProjects = resp.content.filter(p => p.status == 'completado').length;
+        this.activeProjects = resp.content.filter(p => p.status != 'cancelado').length;
       }
     });
 
     this.preferenceService.getPreference().subscribe(resp => {
-      if(resp && resp.length > 0) this.preference = resp[0];
+      this.preference = resp;
     });
   }
 

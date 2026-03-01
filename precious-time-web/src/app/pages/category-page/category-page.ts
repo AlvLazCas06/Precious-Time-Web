@@ -4,7 +4,7 @@ import { Sidebar } from '../../layouts/admin-layout-component/sidebar/sidebar';
 import { CategoryResponse } from '../../models/interfaces/category-response.interface';
 import { CategoryService } from '../../services/category.service';
 import { PreferenceService } from '../../services/preference.service';
-import { Preference } from '../../models/interfaces/preference-response.interface';
+import { PreferenceResponse } from '../../models/interfaces/preference-response.interface';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CategoryDto } from '../../models/dto/category.dto';
 
@@ -24,7 +24,7 @@ export class CategoryPage implements OnInit {
   openModal = false
   loading: boolean = true
   categories: CategoryResponse[] = [];
-  preference?: Preference;
+  preference?: PreferenceResponse;
   newCategoryForm = new FormGroup({
     nameFormControl: new FormControl('', [
       Validators.required,
@@ -86,16 +86,15 @@ export class CategoryPage implements OnInit {
   ngOnInit(): void {
     this.categoryService.getCategories(this.currentPageNumber).subscribe({
       next: resp => {
-        this.categories = resp.data;
-        this.pagesNumber = resp.to;
-        this.currentPageNumber = resp.current_page;
-        this.nextPage = resp.next_page_url
+        this.categories = resp.content;
+        this.pagesNumber = resp.page.totalPages;
+        this.currentPageNumber = resp.page.number;
+        this.loading = false
       }
     });
     this.preferenceService.getPreference().subscribe({
       next: resp => {
-        this.preference = resp[0];
-        this.loading = false
+        this.preference = resp;
       }
     })
   }
@@ -155,8 +154,8 @@ export class CategoryPage implements OnInit {
   changePage(number: number) {
     this.categoryService.getCategories(number).subscribe({
       next: resp => {
-        this.categories = resp.data;
-        this.currentPageNumber = resp.current_page;
+        this.categories = resp.content;
+        this.currentPageNumber = resp.page.number;
         this.loading = false
         window.location.reload;
       }

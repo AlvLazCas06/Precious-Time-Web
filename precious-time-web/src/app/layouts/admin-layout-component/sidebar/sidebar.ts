@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../services/user.service';
 import { PreferenceService } from '../../../services/preference.service';
-import { Preference } from '../../../models/interfaces/preference-response.interface';
+import { PreferenceResponse } from '../../../models/interfaces/preference-response.interface';
 import { EditPreferenceDto } from '../../../models/dto/edit-preference.dto';
 
 @Component({
@@ -14,13 +14,13 @@ import { EditPreferenceDto } from '../../../models/dto/edit-preference.dto';
   styleUrl: './sidebar.css',
 })
 export class Sidebar implements OnInit {
-  preference?: Preference;
+  preference?: PreferenceResponse;
 
   constructor(
     private userService: UserService,
     private preferenceService: PreferenceService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadPreference();
@@ -28,10 +28,10 @@ export class Sidebar implements OnInit {
 
   loadPreference() {
     this.preferenceService.getPreference().subscribe(resp => {
-      if(resp && resp.length > 0) {
-        this.preference = resp[0];
-        this.applyTheme(this.preference.theme);
-      }
+
+      this.preference = resp;
+      this.applyTheme(this.preference.theme);
+
     });
   }
 

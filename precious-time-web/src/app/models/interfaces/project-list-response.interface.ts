@@ -1,14 +1,23 @@
-export type ProjectListResponse = ProjectResponse[]
+export interface ProjectListResponse {
+  content: Project[];
+  page: Page;
+}
 
-export interface ProjectResponse {
-  id: number
-  user_id: number
-  name: string
-  description: string
-  start_date: string
-  finish_date: any
-  status: string
-  progress: string
-  created_at: string
-  updated_at: string
+export interface Project {
+  id: number;
+  name: string;
+  description: string;
+  startDate: string | null;
+  finishDate: string | null;
+  status: string;
+  progress: number;
+  author: string;
+  tasks: any[];
+}
+
+export interface Page {
+  size: number;
+  number: number;
+  totalElements: number;
+  totalPages: number;
 }

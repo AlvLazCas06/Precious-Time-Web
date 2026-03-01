@@ -15,7 +15,8 @@ import { EditUserDto } from '../models/dto/edit-user.dto';
 })
 export class UserService {
 
-  urlBase = 'http://127.0.0.1:8000/api';
+  urlBase = 'http://localhost:8080/auth';
+  urlBase2 = 'http://localhost:8080/api/v1/users'
 
   constructor(private http: HttpClient) { }
 
@@ -28,11 +29,11 @@ export class UserService {
   }
 
   getUsers(): Observable<UserListResponse> {
-    return this.http.get<UserListResponse>(`${this.urlBase}/users`);
+    return this.http.get<UserListResponse>(`${this.urlBase2}`);
   }
 
   getLoginUser(): Observable<UserResponse> {
-    return this.http.get<UserResponse>(`${this.urlBase}/users/${localStorage.getItem('user_id')}`);
+    return this.http.get<UserResponse>(`${this.urlBase2}`);
   }
 
   logoutUser(user: UserResponse): Observable<void> {

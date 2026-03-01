@@ -1,16 +1,16 @@
 export class UserCreateDto {
-  name: string;
+  username: string;
+  fullName: string;
   email: string;
   password: string;
-  password_confirmation: string;
-  phone_number: string;
+  verifyPassword: string;
 
-  constructor(name: string, email: string, password: string, password_confirmation: string, phone_number: string) {
-    this.name = name;
+  constructor(username: string, name: string, email: string, password: string, password_confirmation: string) {
+    this.username = username
+    this.fullName = name;
     this.email = email;
     this.password = password;
-    this.password_confirmation = password_confirmation;
-    this.phone_number = phone_number;
+    this.verifyPassword = password_confirmation;
   }
 
 }

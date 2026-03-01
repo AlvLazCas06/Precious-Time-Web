@@ -1,11 +1,5 @@
-export type PreferenceResponse = Preference[]
-
-export interface Preference {
-  id: number
-  user_id: number
+export interface PreferenceResponse {
   theme: string
-  notifications_active: number
-  notification_type: string
-  created_at: string
-  updated_at: string
+  notificationsActive: boolean
+  type: string
 }

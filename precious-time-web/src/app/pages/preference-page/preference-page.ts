@@ -4,10 +4,9 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Sidebar } from '../../layouts/admin-layout-component/sidebar/sidebar';
 import { UserService } from '../../services/user.service';
 import { PreferenceService } from '../../services/preference.service';
-import { User } from '../../models/interfaces/user-login-response.interface';
 import { UserResponse } from '../../models/interfaces/user-response.interface';
 import { EditUserAdminDto } from '../../models/dto/edit-user-admin.dto';
-import { Preference } from '../../models/interfaces/preference-response.interface';
+import { PreferenceResponse } from '../../models/interfaces/preference-response.interface';
 import { EditPreferenceDto } from '../../models/dto/edit-preference.dto';
 
 @Component({
@@ -20,7 +19,7 @@ import { EditPreferenceDto } from '../../models/dto/edit-preference.dto';
 export class PreferencePage implements OnInit {
 
   user?: UserResponse;
-  preference?: Preference;
+  preference?: PreferenceResponse;
   editUserFormGroup = new FormGroup({
     nameFormControl: new FormControl(''),
     emailFormControl: new FormControl(''),
@@ -45,20 +44,20 @@ export class PreferencePage implements OnInit {
     this.userService.getLoginUser().subscribe({
       next: resp => {
         this.user = resp;
+        console.log(this.user.fullName);
         this.editUserFormGroup.patchValue({
-          nameFormControl: resp.name,
+          nameFormControl: resp.fullName,
           emailFormControl: resp.email,
-          phoneFormControl: resp.phone_number
         })
       }
     });
     this.preferenceService.getPreference().subscribe({
       next: resp => {
-        this.preference = resp[0];
+        this.preference = resp;
         this.editPreferenceFormGroup.patchValue({
-          themeFormControl: resp[0].theme == 'light' ? false : true,
-          notificationTypeFormControl: resp[0].notification_type,
-          notificationActiveFormControl: resp[0].notifications_active == 1 ? true : false
+          themeFormControl: resp.theme == 'light' ? false : true,
+          notificationTypeFormControl: resp.type.toUpperCase().replace(' ', '_'),
+          notificationActiveFormControl: resp.notificationsActive
         });
       },
       error: errors => alert(errors)
@@ -70,7 +69,7 @@ export class PreferencePage implements OnInit {
       this.editUserFormGroup.get('nameFormControl')?.value!,
       this.editUserFormGroup.get('emailFormControl')?.value!,
       this.editUserFormGroup.get('phoneFormControl')?.value!,
-      this.user?.role!
+      this.user?.roles!
     );
     this.userService.editUserAdmin(editUser).subscribe({
       next: resp => window.location.reload(),
@@ -80,11 +79,11 @@ export class PreferencePage implements OnInit {
 
   modifyPreferences() {
     const editPreference = new EditPreferenceDto(
-      this.editPreferenceFormGroup.get('themeFormControl')?.value! ? 'dark' : 'light',
+      this.editPreferenceFormGroup.get('themeFormControl')?.value! ? 'DARK' : 'LIGHT',
       this.editPreferenceFormGroup.get('notificationActiveFormControl')?.value!,
       this.editPreferenceFormGroup.get('notificationTypeFormControl')?.value!
     );
-    this.preferenceService.editPreference(this.preference?.id!, editPreference).subscribe({
+    this.preferenceService.editPreference(editPreference).subscribe({
       next: resp => this.preference = resp,
       error: errors => alert('Ha habido problemas al editar las preferencias')
     });

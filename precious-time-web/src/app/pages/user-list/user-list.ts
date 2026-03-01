@@ -5,7 +5,7 @@ import { Sidebar } from '../../layouts/admin-layout-component/sidebar/sidebar';
 import { UserService } from '../../services/user.service';
 import { PreferenceService } from '../../services/preference.service';
 import { User } from '../../models/interfaces/user-list-response.interface';
-import { Preference } from '../../models/interfaces/preference-response.interface';
+import { PreferenceResponse } from '../../models/interfaces/preference-response.interface';
 import { UserCreateDto } from '../../models/dto/user-create.dto';
 import { EditUserDto } from '../../models/dto/edit-user.dto';
 
@@ -19,7 +19,7 @@ import { EditUserDto } from '../../models/dto/edit-user.dto';
 export class UserList implements OnInit {
 
   users: User[] = [];
-  preference?: Preference;
+  preference?: PreferenceResponse;
 
   isEditing = false;
   currentUserId: number | null = null;
@@ -75,7 +75,7 @@ export class UserList implements OnInit {
     this.loadUsers();
     this.preferenceService.getPreference().subscribe({
       next: resp => {
-        this.preference = resp[0];
+        this.preference = resp;
       },
       error: errors => console.error(errors)
     });

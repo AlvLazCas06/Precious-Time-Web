@@ -12,7 +12,7 @@ import { UserLoginDto } from '../../models/dto/user-login.dto';
 })
 export class LoginPage {
   loginFormGroup = new FormGroup({
-    emailFormControl: new FormControl('', [
+    usernameFormControl: new FormControl('', [
       Validators.required
     ]),
     passwordFormControl: new FormControl('', [
@@ -27,15 +27,14 @@ export class LoginPage {
 
   login() {
     const user = new UserLoginDto(
-      this.loginFormGroup.get('emailFormControl')?.value!,
+      this.loginFormGroup.get('usernameFormControl')?.value!,
       this.loginFormGroup.get('passwordFormControl')?.value!
     );
     this.userService.loginUser(user).subscribe(
       resp => {
         const token = resp.token;
         localStorage.setItem('token', token);
-        if (resp.user.role === 'admin') {
-          localStorage.setItem('user_id', resp.user.id.toString());
+        if (resp.roles.some(role => role === 'ADMIN')) {
           this.router.navigate(['/dashboard']);
         } else {
           alert('El rol de este usuario no es admin por lo tanto no puede entrar.')

@@ -16,6 +16,26 @@
               id="name"
               name="name"
               class="form-control form-control-lg rounded-3 border-secondary"
+              placeholder="Username"
+              formControlName="usernameFormControl"
+            />
+            @if (signUpForm.get('usernameFormControl')?.invalid && signUpForm.get('usernameFormControl')?.dirty) {
+              <div class="mt-2 alert alert-danger">
+                @if (signUpForm.get('usernameFormControl')?.hasError('required')) {
+                  <p>El nombre es un campo obligatorio</p>
+                }
+                @if (signUpForm.get('usernameFormControl')?.hasError('minLength')) {
+                  <p>La cantidad de caracteres del nombre es insuficiente</p>
+                }
+              </div>
+            }
+          </div>
+          <div class="mb-4">
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="form-control form-control-lg rounded-3 border-secondary"
               placeholder="Nombre"
               formControlName="nameFormControl"
             />
@@ -45,29 +65,6 @@
                   <p>El email es un campo obligatorio</p>
                 }
                 @if (signUpForm.get('emailFormControl')?.hasError('email')) {
-                  <p>No es una dirección de correo valida</p>
-                }
-              </div>
-            }
-          </div>
-          <div class="mb-4">
-            <input
-              type="text"
-              name="phone"
-              id="phone"
-              class="form-control form-control-lg rounded-3 border-secondary"
-              placeholder="Número de teléfono"
-              formControlName="phoneNumberFormControl"
-            />
-            @if (signUpForm.get('phoneNumberFormControl')?.invalid && signUpForm.get('phoneNumberFormControl')?.dirty) {
-              <div class="mt-2 alert alert-danger">
-                @if (signUpForm.get('phoneNumberFormControl')?.hasError('required')) {
-                  <p>La contraseña es un campo obligatorio</p>
-                }
-                @if (signUpForm.get('phoneNumberFormControl')?.hasError('minLength')) {
-                  <p>No es una dirección de correo valida</p>
-                }
-                @if (signUpForm.get('phoneNumberFormControl')?.hasError('maxLength')) {
                   <p>No es una dirección de correo valida</p>
                 }
               </div>

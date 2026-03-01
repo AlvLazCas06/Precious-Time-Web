@@ -2,11 +2,11 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { Sidebar } from '../../layouts/admin-layout-component/sidebar/sidebar';
 import { CreateProjectDto } from '../../models/dto/create-project.dto';
-import { Preference } from '../../models/interfaces/preference-response.interface';
+import { PreferenceResponse } from '../../models/interfaces/preference-response.interface';
 import { PreferenceService } from '../../services/preference.service';
 import { ProjectService } from '../../services/project.service';
-import { ProjectResponse } from './../../models/interfaces/project-list-response.interface';
 import { Component, OnInit } from '@angular/core';
+import { Project } from '../../models/interfaces/project-list-response.interface';
 
 @Component({
   selector: 'app-project-page',
@@ -17,8 +17,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectPage implements OnInit {
 
-  projects: ProjectResponse[] = [];
-  preference?: Preference;
+  projects: Project[] = [];
+  preference?: PreferenceResponse;
 
   // Counts for summary
   pendingCount = 0;
@@ -40,7 +40,7 @@ export class ProjectPage implements OnInit {
     this.loadProjects();
     this.preferenceService.getPreference().subscribe({
       next: (resp) => {
-        if (resp && resp.length > 0) this.preference = resp[0];
+        this.preference = resp;
       }
     });
   }
@@ -48,7 +48,7 @@ export class ProjectPage implements OnInit {
   loadProjects() {
     this.projectService.getProjects().subscribe({
       next: (resp) => {
-        this.projects = resp;
+        this.projects = resp.content;
         this.calculateCounts();
       },
       error: (err) => console.error(err)
