@@ -44,9 +44,9 @@ export class PreferencePage implements OnInit {
     this.userService.getLoginUser().subscribe({
       next: resp => {
         this.user = resp;
-        console.log(this.user.fullName);
+        console.log(this.user.name);
         this.editUserFormGroup.patchValue({
-          nameFormControl: resp.fullName,
+          nameFormControl: resp.name,
           emailFormControl: resp.email,
         })
       }

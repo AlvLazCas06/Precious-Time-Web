@@ -160,29 +160,4 @@
       </div>
   </div>
 
-  <!-- Recet Activity -->
-  <div class="card border-0 shadow-sm bg-body-tertiary">
-      <div class="card-body p-4">
-          <h5 class="fw-bold text-body-emphasis mb-4">Actividad Reciente</h5>
-
-          <div class="d-flex flex-column gap-4">
-              @for (activity of recentActivities; track activity.text) {
-              <div class="d-flex gap-3 align-items-center activity-item">
-                  <div class="activity-icon-container"
-                       [class.activity-icon-teal]="activity.color === 'teal'"
-                       [class.activity-icon-purple]="activity.color === 'purple'"
-                       [class.activity-icon-orange]="activity.color === 'orange'"
-                       [class.activity-icon-blue]="activity.color === 'blue'">
-                      <i class="bi" [class]="activity.icon"></i>
-                  </div>
-                  <div>
-                      <p class="mb-0 text-body-emphasis fw-medium">{{ activity.text }}</p>
-                      <small class="text-body-secondary">{{ activity.time }}</small>
-                  </div>
-              </div>
-              }
-          </div>
-      </div>
-  </div>
-
 </div>

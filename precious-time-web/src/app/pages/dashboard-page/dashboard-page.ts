@@ -4,7 +4,7 @@ import { Sidebar } from '../../layouts/admin-layout-component/sidebar/sidebar';
 import { TaskService } from '../../services/task.service';
 import { UserService } from '../../services/user.service';
 import { Task } from '../../models/interfaces/task-list-response.interface';
-import { User } from '../../models/interfaces/user-list-response.interface';
+import { UserItem } from '../../models/interfaces/user-list-response.interface';
 import { PreferenceResponse } from '../../models/interfaces/preference-response.interface';
 import { PreferenceService } from '../../services/preference.service';
 import { ProjectService } from '../../services/project.service';
@@ -44,14 +44,6 @@ export class DashboardPage implements OnInit {
   chartPath = "20,250 120,230 220,200 320,150 420,100 520,50 620,20";
   // Simple points for visual representation matching "Crecimiento de Usuarios"
 
-  recentActivities = [
-    { text: 'Nuevo usuario registrado: María García', time: 'Hace 5 minutos', icon: 'bi-people', color: 'teal' },
-    { text: 'Tarea "Revisión mensual" completada por Juan Pérez', time: 'Hace 12 minutos', icon: 'bi-list-check', color: 'teal' }, // Actually green in image but teal consistent with theme
-    { text: 'Nueva categoría creada: Desarrollo Personal', time: 'Hace 1 hora', icon: 'bi-folder', color: 'purple' },
-    { text: 'Usuario actualizado a Premium: Ana López', time: 'Hace 2 horas', icon: 'bi-person-up', color: 'teal' },
-    { text: 'Notificación enviada a 120 usuarios', time: 'Hace 3 horas', icon: 'bi-bell', color: 'blue' },
-  ];
-
   constructor(
     private taskService: TaskService,
     private userService: UserService,
@@ -61,8 +53,8 @@ export class DashboardPage implements OnInit {
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe(resp => {
-      this.totalUsers = resp.length;
-      this.activeUsers = resp.filter(u => u.is_active).length;
+      this.totalUsers = resp.content.length;
+      this.activeUsers = resp.content.filter(u => u.active).length;
     });
 
     this.taskService.getTasks().subscribe(resp => {

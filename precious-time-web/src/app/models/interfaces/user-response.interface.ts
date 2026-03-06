@@ -1,7 +1,9 @@
 export interface UserResponse {
   username: string;
   email: string;
-  fullName: string;
+  name: string;
+  lastname: string;
   premium: boolean;
   roles: string[];
+  active: boolean;
 }

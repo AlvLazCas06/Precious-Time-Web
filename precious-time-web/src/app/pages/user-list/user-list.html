@@ -51,7 +51,7 @@
             </tr>
           </thead>
           <tbody>
-            @for (user of users; track user.id) {
+            @for (user of users; track user.username) {
             <tr>
               <td class="ps-4">
                 <div class="d-flex align-items-center gap-3">
@@ -62,25 +62,23 @@
                 </div>
               </td>
               <td class="text-body-secondary">{{ user.email }}</td>
-              <td class="text-body-secondary">{{ user.phone_number }}</td>
               <td>
                 <span
                   class="badge rounded-pill px-3 py-2 border-0"
-                  [class]="getUserRoleBadgeClass(user.role)"
                 >
-                  {{ user.role }}
+                  {{ user.roles }}
                 </span>
               </td>
               <td>
                 <span
                   class="badge rounded-pill px-3 py-2 border-0"
-                  [ngClass]="user.is_active ? 'badge-status-active' : 'badge-status-inactive'"
+                  [ngClass]="user ? 'badge-status-active' : 'badge-status-inactive'"
                 >
-                  {{ user.is_active ? 'Activo' : 'Inactivo' }}
+                  {{ user ? 'Activo' : 'Inactivo' }}
                 </span>
               </td>
               <td class="text-center">
-                @if (user.is_premium) {
+                @if (user.premium) {
                 <span class="text-premium small"><i class="bi bi-crown-fill me-1"></i> Sí</span>
                 } @else {
                 <span class="text-body-secondary small">No</span>
@@ -90,13 +88,13 @@
                 <div class="d-flex justify-content-center gap-2">
                   <button
                     class="btn btn-action btn-action-edit"
-                    (click)="editUserModal(user)"
+
                     data-bs-toggle="modal"
                     data-bs-target="#userModal"
                   >
                     <i class="bi bi-pencil-square"></i>
                   </button>
-                  <button class="btn btn-action btn-action-delete" (click)="deleteUser(user.id)">
+                  <button class="btn btn-action btn-action-delete" (click)="deleteUser(user.username)">
                     <i class="bi bi-trash3-fill"></i>
                   </button>
                 </div>

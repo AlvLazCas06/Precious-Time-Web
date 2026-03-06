@@ -22,11 +22,11 @@ export class CategoryService {
   }
 
   getCategory(id: number): Observable<CategoryResponse> {
-    return this.http.get<CategoryResponse>(`${this.urlBase}/categories/${id}`);
+    return this.http.get<CategoryResponse>(`${this.urlBase}/${id}`);
   }
 
   deleteCategory(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.urlBase}/categories/${id}`);
+    return this.http.delete<void>(`${this.urlBase}/${id}`);
   }
 
   editCategory(id: number, editCategory: CategoryDto): Observable<CategoryResponse> {

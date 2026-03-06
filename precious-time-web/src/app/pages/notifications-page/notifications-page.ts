@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'; // Import FormsModule
 import { Sidebar } from '../../layouts/admin-layout-component/sidebar/sidebar';
-import { User } from '../../models/interfaces/user-list-response.interface';
+import { UserItem } from '../../models/interfaces/user-list-response.interface';
 import { UserService } from '../../services/user.service';
 import { PreferenceService } from '../../services/preference.service';
 import { PreferenceResponse } from '../../models/interfaces/preference-response.interface';
@@ -19,7 +19,7 @@ import { ReminderResponse } from '../../models/interfaces/reminder-list-response
 })
 export class NotificationsPage implements OnInit {
 
-  userList: User[] = [];
+  userList: UserItem[] = [];
   preference?: PreferenceResponse;
   reminderList: ReminderResponse[] = [];
   noRead = 0
@@ -42,8 +42,8 @@ export class NotificationsPage implements OnInit {
   ngOnInit(): void {
     this.userService.getUsers().subscribe({
       next: resp => {
-        this.userList = resp
-          .filter(user => user.is_active && user.id != +localStorage.getItem('user_id')!)
+        this.userList = resp.content
+          .filter(user => user.active)
       },
       error: error => alert('No hay usuarios')
     });

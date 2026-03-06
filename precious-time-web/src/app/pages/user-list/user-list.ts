@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Sidebar } from '../../layouts/admin-layout-component/sidebar/sidebar';
 import { UserService } from '../../services/user.service';
 import { PreferenceService } from '../../services/preference.service';
-import { User } from '../../models/interfaces/user-list-response.interface';
+import { UserItem } from '../../models/interfaces/user-list-response.interface';
 import { PreferenceResponse } from '../../models/interfaces/preference-response.interface';
 import { UserCreateDto } from '../../models/dto/user-create.dto';
 import { EditUserDto } from '../../models/dto/edit-user.dto';
@@ -18,7 +18,7 @@ import { EditUserDto } from '../../models/dto/edit-user.dto';
 })
 export class UserList implements OnInit {
 
-  users: User[] = [];
+  users: UserItem[] = [];
   preference?: PreferenceResponse;
 
   isEditing = false;
@@ -83,7 +83,7 @@ export class UserList implements OnInit {
 
   loadUsers() {
     this.userService.getUsers().subscribe(resp => {
-      this.users = resp;
+      this.users = resp.content;
     });
   }
 
@@ -95,17 +95,16 @@ export class UserList implements OnInit {
     });
   }
 
-  editUserModal(user: User) {
-    this.isEditing = true;
-    this.currentUserId = user.id;
-    this.userFormGroup.patchValue({
-      nameFormControl: user.name,
-      emailFormControl: user.email,
-      rolFormControl: user.role,
-      phoneFormControl: user.phone_number
-    });
-    // Password usually blank or optional on edit
-  }
+  // editUserModal(user: User) {
+  //   this.isEditing = true;
+  //   this.currentUserId = user.id;
+  //   this.userFormGroup.patchValue({
+  //     nameFormControl: user.name,
+  //     emailFormControl: user.email,
+  //     rolFormControl: user.role,
+  //     phoneFormControl: user.phone_number
+  //   });
+  // }
 
   saveUser() {
     const newUser = new UserCreateDto(
@@ -133,7 +132,7 @@ export class UserList implements OnInit {
     this.userService
   }
 
-  deleteUser(id: number) {
+  deleteUser(id: string) {
     if (confirm('¿Estás seguro de eliminar este usuario?')) {
       this.userService.deleteUser(id).subscribe({
         next: resp => window.location.reload(),
@@ -144,14 +143,6 @@ export class UserList implements OnInit {
 
   getInitials(name: string): string {
     return name ? name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : '';
-  }
-
-  getUserRoleBadgeClass(role: string): string {
-    switch (role?.toLowerCase()) {
-      case 'admin': return 'badge-role-admin';
-      case 'user': return 'badge-role-user';
-      default: return 'badge-role-guest';
-    }
   }
 
 }

@@ -50,8 +50,8 @@
                 name="selectedUserId"
               >
                 <option [ngValue]="null" disabled selected>Selecciona un usuario</option>
-                @for (user of userList; track user.id) {
-                <option [value]="user.id">
+                @for (user of userList; track user.username) {
+                <option [value]="user.username">
                   {{ user.name }}
                 </option>
                 }

@@ -29,7 +29,7 @@ export class UserService {
   }
 
   getUsers(): Observable<UserListResponse> {
-    return this.http.get<UserListResponse>(`${this.urlBase2}`);
+    return this.http.get<UserListResponse>(`${this.urlBase2}/admin`);
   }
 
   getLoginUser(): Observable<UserResponse> {
@@ -48,7 +48,7 @@ export class UserService {
     return this.http.put<UserResponse>(`${this.urlBase}/users/${id}`, user);
   }
 
-  deleteUser(id: number): Observable<void> {
+  deleteUser(id: string): Observable<void> {
     return this.http.delete<void>(`${this.urlBase}/users/${id}`);
   }
 

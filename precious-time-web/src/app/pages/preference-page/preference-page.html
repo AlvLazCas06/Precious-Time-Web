@@ -6,14 +6,13 @@
   </div>
 
   <div class="row g-4">
-    <!-- Left Column: Profile Summary -->
     <div class="col-lg-4">
       <div class="card border-0 shadow-sm h-100">
         <div class="card-body text-center d-flex flex-column align-items-center justify-content-center p-5">
           <div class="avatar-circle mb-3 d-flex align-items-center justify-content-center">
             <i class="bi bi-person text-white display-4"></i>
           </div>
-          <h5 class="fw-bold mb-1 text-body-emphasis">{{ user?.fullName }}</h5>
+          <h5 class="fw-bold mb-1 text-body-emphasis">{{ user?.name }}</h5>
           <p class="text-muted mb-3">{{ user?.email }}</p>
           <span class="badge rounded-pill bg-purple-subtle text-purple px-3 py-2">
             <i class="bi bi-shield-lock me-1"></i> {{ user?.roles }}
@@ -22,10 +21,7 @@
       </div>
     </div>
 
-    <!-- Right Column: Settings Forms -->
     <div class="col-lg-8">
-
-      <!-- Personal Information -->
       <div class="card border-0 shadow-sm mb-4">
         <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0">
           <h5 class="fw-bold mb-0 text-body-emphasis">
@@ -35,16 +31,16 @@
         <div class="card-body p-4">
           <form [formGroup]="editUserFormGroup">
             <div class="mb-3">
-              <label for="fullName" class="form-label text-muted small">Nombre completo</label>
-              <input type="text" class="form-control bg-body-tertiary border-0" id="fullName" name="fullName" [value]="user?.fullName" formControlName="nameFormControl">
+              <label for="name" class="form-label text-muted small">Nombre</label>
+              <input type="text" class="form-control bg-body-tertiary border-0" id="name" name="name" [value]="user?.name" formControlName="nameFormControl">
+            </div>
+            <div class="mb-3">
+              <label for="lastname" class="form-label text-muted small">Apellido/s</label>
+              <input type="text" class="form-control bg-body-tertiary border-0" id="lastname" name="lastname" [value]="user?.lastname" formControlName="nameFormControl">
             </div>
             <div class="mb-3">
               <label for="email" class="form-label text-muted small">Email</label>
               <input type="email" class="form-control bg-body-tertiary border-0" id="email" name="email" [value]="user?.email" formControlName="emailFormControl">
-            </div>
-            <div class="mb-4">
-              <label for="phone" class="form-label text-muted small">Teléfono</label>
-              <input type="tel" class="form-control bg-body-tertiary border-0" id="phone" name="phone" [value]="user" formControlName="phoneFormControl">
             </div>
             <button type="submit" class="btn btn-teal text-white w-100 py-2 fw-medium" (click)="modifyUser()">
               <i class="bi bi-save me-2"></i> Guardar Cambios
@@ -53,9 +49,7 @@
         </div>
       </div>
 
-      <!-- Preferences Form -->
       <form [formGroup]="editPreferenceFormGroup" (change)="modifyPreferences()">
-        <!-- Appearance -->
         <div class="card border-0 shadow-sm mb-4">
           <div class="card-header bg-transparent border-0 pt-4 px-4 pb-0">
             <h5 class="fw-bold mb-0 text-body-emphasis">
@@ -84,7 +78,6 @@
           </div>
           <div class="card-body p-4">
 
-            <!-- Active Notifications Switch -->
             <div class="d-flex justify-content-between align-items-center mb-4">
               <div>
                 <p class="fw-bold mb-0 text-body-emphasis">Activar Notificaciones</p>
@@ -94,8 +87,6 @@
                 <input class="form-check-input custom-switch" type="checkbox" role="switch" id="activeNotif" formControlName="notificationActiveFormControl">
               </div>
             </div>
-
-            <!-- Notification Type Select -->
             <div class="mb-4">
               <label for="notifType" class="form-label fw-bold text-body-emphasis">Tipo de Notificación</label>
               <select class="form-select bg-body-tertiary border-0" id="notifType" formControlName="notificationTypeFormControl">
