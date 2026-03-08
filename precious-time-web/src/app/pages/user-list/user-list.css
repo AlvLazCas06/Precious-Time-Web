@@ -129,6 +129,14 @@
     background-color: #f44336;
     color: white;
 }
+.btn-action-admin {
+    background-color: #f3e5f5;
+    color: #9c27b0;
+}
+.btn-action-admin:hover {
+    background-color: #9c27b0;
+    color: white;
+}
 
 /* Premium Text */
 .text-premium {

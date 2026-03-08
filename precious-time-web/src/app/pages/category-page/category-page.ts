@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Sidebar } from '../../layouts/admin-layout-component/sidebar/sidebar';
 import { CategoryResponse } from '../../models/interfaces/category-response.interface';
 import { CategoryService } from '../../services/category.service';
 import { PreferenceService } from '../../services/preference.service';
@@ -11,15 +10,15 @@ import { CategoryDto } from '../../models/dto/category.dto';
 @Component({
   selector: 'app-category-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Sidebar],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './category-page.html',
   styleUrl: './category-page.css',
 })
 export class CategoryPage implements OnInit {
 
   nextPage?: string
-  currentPageNumber = 1;
-  pagesNumber = 1;
+  currentPageNumber = 0;
+  pagesNumber = 0;
   editCategoryId?: number;
   openModal = false
   loading: boolean = true
@@ -37,7 +36,8 @@ export class CategoryPage implements OnInit {
       Validators.maxLength(2)
     ]),
     colorFormControl: new FormControl('', [
-      Validators.required
+      Validators.required,
+      Validators.pattern('')
     ]),
   });
 
@@ -53,7 +53,8 @@ export class CategoryPage implements OnInit {
       Validators.maxLength(2)
     ]),
     colorFormControl: new FormControl('', [
-      Validators.required
+      Validators.required,
+      Validators.pattern('')
     ])
   });
 
@@ -65,11 +66,6 @@ export class CategoryPage implements OnInit {
   get isDarkTheme(): boolean {
     return this.preference?.theme === 'dark';
   }
-
-  colors: string[] = [
-    '#3b82f6', '#10b981', '#8b5cf6', '#ef4444', '#f59e0b', '#ec4899',
-    '#14b8a6', '#f97316', '#6366f1', '#06b6d4', '#84cc16', '#a855f7'
-  ];
 
   emojis: string[] = [
     '📁', '💼', '🏠', '📚', '❤️', '💰', '🎮', '🛒',

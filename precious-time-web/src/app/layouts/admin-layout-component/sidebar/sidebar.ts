@@ -40,11 +40,8 @@ export class Sidebar implements OnInit {
   }
 
   logout() {
-    this.userService.getLoginUser().subscribe(resp => {
-      this.userService.logoutUser(resp).subscribe(() => {
-        this.router.navigate(['/login']);
-      });
-    });
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
   }
 
   get isDarkTheme(): boolean {

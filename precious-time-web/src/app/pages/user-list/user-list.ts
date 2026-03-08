@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Sidebar } from '../../layouts/admin-layout-component/sidebar/sidebar';
 import { UserService } from '../../services/user.service';
 import { PreferenceService } from '../../services/preference.service';
-import { UserItem } from '../../models/interfaces/user-list-response.interface';
+import { UserItem } from '../../models/interfaces/user-page-response.interface';
 import { PreferenceResponse } from '../../models/interfaces/preference-response.interface';
 import { UserCreateDto } from '../../models/dto/user-create.dto';
 import { EditUserDto } from '../../models/dto/edit-user.dto';
@@ -12,7 +11,7 @@ import { EditUserDto } from '../../models/dto/edit-user.dto';
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Sidebar],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './user-list.html',
   styleUrl: './user-list.css',
 })
@@ -22,10 +21,26 @@ export class UserList implements OnInit {
   preference?: PreferenceResponse;
 
   isEditing = false;
-  currentUserId: number | null = null;
+  currentUserId: string | null = null;
+  currentPageNumber = 0;
+  pagesNumber = 0;
+
+  showPassword = false;
+  showPasswordConfirm = false;
+
+  togglePassword() { this.showPassword = !this.showPassword; }
+  togglePasswordConfirm() { this.showPasswordConfirm = !this.showPasswordConfirm; }
 
   userFormGroup = new FormGroup({
+    usernameFormControl: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+    ]),
     nameFormControl: new FormControl('', [
+      Validators.required,
+      Validators.minLength(2),
+    ]),
+    lastnameFormControl: new FormControl('', [
       Validators.required,
       Validators.minLength(2),
     ]),
@@ -33,17 +48,15 @@ export class UserList implements OnInit {
       Validators.required,
       Validators.email
     ]),
-    rolFormControl: new FormControl<string>('user', [
-      Validators.required
-    ]),
-    phoneFormControl: new FormControl('', [
-      Validators.required,
-      Validators.minLength(8)
-    ]),
     passwordFormcontrol: new FormControl('', [
       Validators.required,
       Validators.minLength(8)
     ]),
+    passwordConfirmFormcontrol: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8)
+    ]),
+    rolFormControl: new FormControl('user', [Validators.required]),
   });
 
   constructor(
@@ -57,6 +70,10 @@ export class UserList implements OnInit {
 
   get nameFormControl() {
     return this.userFormGroup.get('nameFormControl');
+  }
+
+  get lastnameFormControl() {
+    return this.userFormGroup.get('lastnameFormControl');
   }
 
   get emailFormControl() {
@@ -82,40 +99,42 @@ export class UserList implements OnInit {
   }
 
   loadUsers() {
-    this.userService.getUsers().subscribe(resp => {
+    this.userService.getUsers(this.currentPageNumber).subscribe(resp => {
       this.users = resp.content;
+      this.pagesNumber = resp.page.totalPages;
+      this.currentPageNumber = resp.page.number;
     });
   }
 
   openNewUserModal() {
     this.isEditing = false;
     this.currentUserId = null;
-    this.userFormGroup.reset({
-      rolFormControl: 'user',
+  }
+
+  editUserModal(user: UserItem) {
+    this.isEditing = true;
+    this.currentUserId = user.username;
+    this.userFormGroup.patchValue({
+      nameFormControl: user.name,
+      lastnameFormControl: user.lastname,
+      emailFormControl: user.email,
     });
   }
 
-  // editUserModal(user: User) {
-  //   this.isEditing = true;
-  //   this.currentUserId = user.id;
-  //   this.userFormGroup.patchValue({
-  //     nameFormControl: user.name,
-  //     emailFormControl: user.email,
-  //     rolFormControl: user.role,
-  //     phoneFormControl: user.phone_number
-  //   });
-  // }
-
   saveUser() {
     const newUser = new UserCreateDto(
+      this.userFormGroup.get('usernameFormControl')?.value!,
       this.userFormGroup.get('nameFormControl')?.value!,
+      this.userFormGroup.get('lastnameFormControl')?.value!,
       this.userFormGroup.get('emailFormControl')?.value!,
       this.userFormGroup.get('passwordFormcontrol')?.value!,
-      this.userFormGroup.get('rolFormControl')?.value!,
-      this.userFormGroup.get('phoneFormControl')?.value!
+      this.userFormGroup.get('passwordConfirmFormcontrol')?.value!,
     );
-    this.userService.createUser(newUser).subscribe({
-      next: resp => window.location.reload,
+    this.userService.createNewUser(newUser).subscribe({
+      next: resp => {
+        this.preferenceService.createPreference(resp.username).subscribe();
+        window.location.reload
+      },
       error: errors => alert('error al crear el usuario')
     });
 
@@ -124,12 +143,14 @@ export class UserList implements OnInit {
   editUser() {
     const newUser = new EditUserDto(
       this.userFormGroup.get('nameFormControl')?.value!,
-      this.userFormGroup.get('emailFormControl')?.value!,
-      this.userFormGroup.get('passwordFormcontrol')?.value!,
-      this.userFormGroup.get('passwordFormcontrol')?.value!,
-      this.userFormGroup.get('phoneFormControl')?.value!
+      this.userFormGroup.get('lastnamenameFormControl')?.value!,
+      this.userFormGroup.get('emailFormControl')?.value!
     );
-    this.userService
+    this.userService.editUser(this.currentUserId!, newUser).subscribe(
+      {
+        next: resp => window.location.reload
+      }
+    );
   }
 
   deleteUser(id: string) {
@@ -137,6 +158,20 @@ export class UserList implements OnInit {
       this.userService.deleteUser(id).subscribe({
         next: resp => window.location.reload(),
         error: errors => alert('Error al borrar el usuario.')
+      });
+    }
+  }
+
+  changePage(page: number) {
+    this.currentPageNumber = page;
+    this.loadUsers();
+  }
+
+  setAdminRole(username: string) {
+    if (confirm(`¿Asignar rol de Administrador a "${username}"?`)) {
+      this.userService.setRoleAdmin(username).subscribe({
+        next: () => this.loadUsers(),
+        error: () => alert('Error al asignar el rol de administrador.')
       });
     }
   }

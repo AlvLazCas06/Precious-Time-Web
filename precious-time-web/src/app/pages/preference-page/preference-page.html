@@ -1,5 +1,4 @@
-<app-sidebar></app-sidebar>
-<div class="container-fluid p-4 bg-body min-vh-100" style="margin-left: 250px" [attr.data-bs-theme]="isDarkTheme ? 'dark' : 'light'">
+<div class="container-fluid p-4 bg-body min-vh-100" [attr.data-bs-theme]="isDarkTheme ? 'dark' : 'light'">
   <div class="mb-4">
     <h2 class="fw-bold text-body-emphasis">Preferencias de Administrador</h2>
     <p class="text-muted">Configura tus preferencias personales y del sistema</p>
@@ -36,13 +35,13 @@
             </div>
             <div class="mb-3">
               <label for="lastname" class="form-label text-muted small">Apellido/s</label>
-              <input type="text" class="form-control bg-body-tertiary border-0" id="lastname" name="lastname" [value]="user?.lastname" formControlName="nameFormControl">
+              <input type="text" class="form-control bg-body-tertiary border-0" id="lastname" name="lastname" [value]="user?.lastname" formControlName="lastnameFormControl">
             </div>
             <div class="mb-3">
               <label for="email" class="form-label text-muted small">Email</label>
               <input type="email" class="form-control bg-body-tertiary border-0" id="email" name="email" [value]="user?.email" formControlName="emailFormControl">
             </div>
-            <button type="submit" class="btn btn-teal text-white w-100 py-2 fw-medium" (click)="modifyUser()">
+            <button type="submit" class="btn btn-teal text-white w-100 py-2 fw-medium" (click)="modifyUser()" [disabled]="editUserFormGroup.invalid">
               <i class="bi bi-save me-2"></i> Guardar Cambios
             </button>
           </form>

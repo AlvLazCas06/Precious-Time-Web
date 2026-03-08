@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
-import { Sidebar } from '../../layouts/admin-layout-component/sidebar/sidebar'; // Import Sidebar
-import { Task } from '../../models/interfaces/task-list-response.interface';
+import { Task } from '../../models/interfaces/task-page-response.interface';
 import { CategoryResponse } from '../../models/interfaces/category-response.interface';
 import { PreferenceResponse } from '../../models/interfaces/preference-response.interface';
 import { TaskService } from '../../services/task.service';
 import { CategoryService } from '../../services/category.service';
 import { PreferenceService } from '../../services/preference.service';
-import { CreateTaskDto } from '../../models/dto/create-task.dto';
 
 @Component({
   selector: 'app-task-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Sidebar], // Add Sidebar
+  imports: [CommonModule],
   templateUrl: './task-page.html',
   styleUrl: './task-page.css',
 })
@@ -22,13 +19,8 @@ export class TaskPage implements OnInit {
   taskList: Task[] = [];
   categories: CategoryResponse[] = [];
   preference?: PreferenceResponse;
-
-  // Form Group for Modal
-  taskFormGroup = new FormGroup({
-    title: new FormControl('', [Validators.required]),
-    description: new FormControl(''),
-    category_id: new FormControl<number | null>(null, [Validators.required]),
-  });
+  currentPageNumber = 0;
+  pagesNumber = 0;
 
   constructor(
     private taskService: TaskService,
@@ -41,8 +33,10 @@ export class TaskPage implements OnInit {
   }
 
   getAllData() {
-    this.taskService.getTasks().subscribe(resp => {
+    this.taskService.getTasks(this.currentPageNumber).subscribe(resp => {
       this.taskList = resp.content;
+      this.pagesNumber = resp.page.totalPages;
+      this.currentPageNumber = resp.page.number;
     });
     this.categoryService.getCategories(1).subscribe(resp => {
       this.categories = resp.content;
@@ -78,16 +72,12 @@ export class TaskPage implements OnInit {
     }
   }
 
-  saveTask() {
-    const task = new CreateTaskDto(
-      this.taskFormGroup.get('title')?.value!,
-      +this.taskFormGroup.get('category_id')?.value!
-    );
-    if (this.taskFormGroup.get('description')?.value != null) {
-      task.description = this.taskFormGroup.get('description')?.value!
-    }
-    this.taskService.createTask(task).subscribe(resp => {
-      window.location.reload();
+  changePage(page: number) {
+    this.currentPageNumber = page;
+    this.taskService.getTasks(page).subscribe(resp => {
+      this.taskList = resp.content;
+      this.pagesNumber = resp.page.totalPages;
+      this.currentPageNumber = resp.page.number;
     });
   }
 }

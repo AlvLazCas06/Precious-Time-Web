@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Project, ProjectListResponse } from '../models/interfaces/project-list-response.interface';
-import { CreateProjectDto } from '../models/dto/create-project.dto';
+import { ProjectPageResponse, ProjectResponse } from '../models/interfaces/project-page-response.interface';
+import { ProjectListResponse } from '../models/interfaces/project-list-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,12 +13,12 @@ export class ProjectService {
 
   constructor(private http: HttpClient) { }
 
-  getProjects(): Observable<ProjectListResponse> {
-    return this.http.get<ProjectListResponse>(`${this.urlBase}/admin`);
+  getProjects(numPage: number): Observable<ProjectPageResponse> {
+    return this.http.get<ProjectPageResponse>(`${this.urlBase}/admin?page=${numPage}`);
   }
 
-  createProjects(project: CreateProjectDto): Observable<Project> {
-    return this.http.post<Project>(`${this.urlBase}`, project);
+  getListProjects(): Observable<ProjectListResponse> {
+    return this.http.get<ProjectListResponse>(`${this.urlBase}/admin/all`);
   }
 
 }

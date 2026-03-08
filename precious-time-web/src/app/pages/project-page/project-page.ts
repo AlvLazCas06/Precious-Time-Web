@@ -1,35 +1,29 @@
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Sidebar } from '../../layouts/admin-layout-component/sidebar/sidebar';
-import { CreateProjectDto } from '../../models/dto/create-project.dto';
 import { PreferenceResponse } from '../../models/interfaces/preference-response.interface';
 import { PreferenceService } from '../../services/preference.service';
 import { ProjectService } from '../../services/project.service';
+import { ProjectResponse } from '../../models/interfaces/project-page-response.interface';
 import { Component, OnInit } from '@angular/core';
-import { Project } from '../../models/interfaces/project-list-response.interface';
 
 @Component({
   selector: 'app-project-page',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Sidebar],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './project-page.html',
   styleUrl: './project-page.css',
 })
 export class ProjectPage implements OnInit {
 
-  projects: Project[] = [];
+  projects: ProjectResponse[] = [];
   preference?: PreferenceResponse;
+  currentPageNumber = 0;
+  pagesNumber = 0;
 
-  // Counts for summary
-  pendingCount = 0;
+  totalProjects = 0;
   processCount = 0;
   completedCount = 0;
   cancelledCount = 0;
-
-  projectFormGroup = new FormGroup({
-    nameFormControl: new FormControl('', [Validators.required]),
-    descriptionFormControl: new FormControl('', [Validators.required]),
-  });
 
   constructor(
     private projectService: ProjectService,
@@ -40,26 +34,27 @@ export class ProjectPage implements OnInit {
     this.loadProjects();
     this.preferenceService.getPreference().subscribe({
       next: (resp) => {
-        this.preference = resp;
+      this.preference = resp;
       }
     });
   }
 
   loadProjects() {
-    this.projectService.getProjects().subscribe({
+    this.projectService.getProjects(this.currentPageNumber).subscribe({
       next: (resp) => {
         this.projects = resp.content;
-        this.calculateCounts();
+        this.pagesNumber = resp.page.totalPages;
+        this.currentPageNumber = resp.page.number;
       },
       error: (err) => console.error(err)
     });
-  }
-
-  calculateCounts() {
-    this.pendingCount = this.projects.filter(p => p.status === 'Pendiente').length;
-    this.processCount = this.projects.filter(p => p.status === 'En Proceso').length;
-    this.completedCount = this.projects.filter(p => p.status === 'Completado').length;
-    this.cancelledCount = this.projects.filter(p => p.status === 'Cancelado').length;
+    this.projectService.getListProjects().subscribe({
+      next: (resp) => {
+        this.processCount = resp.filter(p => p.status === 'en proceso').length;
+        this.completedCount = resp.filter(p => p.status === 'completado').length;
+        this.cancelledCount = resp.filter(p => p.status === 'cancelado').length;
+      }
+    })
   }
 
   get isDarkTheme(): boolean {
@@ -86,14 +81,14 @@ export class ProjectPage implements OnInit {
     }
   }
 
-  createProject() {
-    const project = new CreateProjectDto(
-      +localStorage.getItem('user_id')!,
-      this.projectFormGroup.get('nameFormControl')?.value!,
-      this.projectFormGroup.get('descriptionFormControl')?.value!
-    );
-    this.projectService.createProjects(project).subscribe(resp => {
-      window.location.reload();
+  changePage(page: number) {
+    this.currentPageNumber = page;
+    this.projectService.getProjects(page).subscribe({
+      next: (resp) => {
+        this.projects = resp.content;
+        this.pagesNumber = resp.page.totalPages;
+        this.currentPageNumber = resp.page.number;
+      }
     });
   }
 }

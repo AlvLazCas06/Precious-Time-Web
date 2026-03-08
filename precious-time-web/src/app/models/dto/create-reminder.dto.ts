@@ -1,12 +1,12 @@
 export class CreateReminderDto {
   title: string;
   message: string;
-  is_read: boolean;
+  username: string;
 
-  constructor(title: string, message: string, is_read: boolean) {
+  constructor(title: string, message: string, username: string) {
     this.title = title;
     this.message = message;
-    this.is_read = is_read
+    this.username = username;
   }
 
 }

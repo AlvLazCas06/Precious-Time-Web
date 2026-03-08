@@ -1,32 +1,37 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import CommonModule
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms'; // Import FormsModule
-import { Sidebar } from '../../layouts/admin-layout-component/sidebar/sidebar';
-import { UserItem } from '../../models/interfaces/user-list-response.interface';
+import { CommonModule } from '@angular/common';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
 import { PreferenceService } from '../../services/preference.service';
 import { PreferenceResponse } from '../../models/interfaces/preference-response.interface';
 import { CreateReminderDto } from '../../models/dto/create-reminder.dto';
 import { ReminderService } from '../../services/reminder.service';
 import { ReminderResponse } from '../../models/interfaces/reminder-list-response.interface';
+import { UserResponse } from '../../models/interfaces/user-response.interface';
 
 @Component({
   selector: 'app-notifications-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, Sidebar],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './notifications-page.html',
   styleUrl: './notifications-page.css',
 })
 export class NotificationsPage implements OnInit {
 
-  userList: UserItem[] = [];
+  userList: UserResponse[] = [];
   preference?: PreferenceResponse;
   reminderList: ReminderResponse[] = [];
   noRead = 0
   notificationFormGroup = new FormGroup({
-    titleFormControl: new FormControl(''),
-    messageFormControl: new FormControl(''),
-    userFormControl: new FormControl()
+    titleFormControl: new FormControl('', [
+      Validators.required
+    ]),
+    messageFormControl: new FormControl('', [
+      Validators.required
+    ]),
+    userFormControl: new FormControl('', [
+      Validators.required
+    ])
   });
 
   constructor(
@@ -40,9 +45,9 @@ export class NotificationsPage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe({
+    this.userService.getAllUsers().subscribe({
       next: resp => {
-        this.userList = resp.content
+        this.userList = resp
           .filter(user => user.active)
       },
       error: error => alert('No hay usuarios')
@@ -54,7 +59,7 @@ export class NotificationsPage implements OnInit {
     this.reminderService.getNotifiactions().subscribe({
       next: resp => {
         this.reminderList = resp;
-        this.noRead = resp.filter(reminder => !reminder.is_read).length;
+        this.noRead = resp.filter(reminder => !reminder.read).length;
       },
       error: error => console.log('No tienes notificaciones.')
     });

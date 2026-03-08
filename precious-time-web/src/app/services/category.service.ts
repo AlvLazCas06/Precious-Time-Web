@@ -18,7 +18,7 @@ export class CategoryService {
   }
 
   getCategories(numPage: number): Observable<CategoryListResponse> {
-    return this.http.get<CategoryListResponse>(`${this.urlBase}`);
+    return this.http.get<CategoryListResponse>(`${this.urlBase}?page=${numPage}`);
   }
 
   getCategory(id: number): Observable<CategoryResponse> {
@@ -26,7 +26,7 @@ export class CategoryService {
   }
 
   deleteCategory(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.urlBase}/${id}`);
+    return this.http.delete<void>(`${this.urlBase}/admin/${id}`);
   }
 
   editCategory(id: number, editCategory: CategoryDto): Observable<CategoryResponse> {

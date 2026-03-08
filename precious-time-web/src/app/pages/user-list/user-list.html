@@ -1,7 +1,5 @@
-<app-sidebar></app-sidebar>
 <div
-  class="container-fluid p-4 bg-body min-vh-100"
-  style="margin-left: 250px"
+  class="container-fluid p-4 bg-body min-vh-100 d-flex flex-column"
   [attr.data-bs-theme]="isDarkTheme ? 'dark' : 'light'"
 >
   <!-- Header Section -->
@@ -20,21 +18,6 @@
     </button>
   </div>
 
-  <!-- Search Section -->
-  <div class="card border-0 shadow-sm mb-4">
-    <div class="card-body p-2">
-      <div class="search-box">
-        <i class="bi bi-search search-icon text-body-secondary"></i>
-        <input
-          type="text"
-          class="form-control border-0 search-input bg-body"
-          placeholder="Buscar por nombre o email..."
-        />
-      </div>
-    </div>
-  </div>
-
-  <!-- Users Table -->
   <div class="card border-0 shadow-sm">
     <div class="card-body p-0">
       <div class="table-responsive">
@@ -42,8 +25,8 @@
           <thead class="bg-body-tertiary">
             <tr>
               <th class="ps-4 py-3 text-body-emphasis">Nombre</th>
+              <th class="ps-4 py-3 text-body-emphasis">Username</th>
               <th class="py-3 text-body-emphasis">Email</th>
-              <th class="py-3 text-body-emphasis">Teléfono</th>
               <th class="py-3 text-body-emphasis">Rol</th>
               <th class="py-3 text-body-emphasis">Estado</th>
               <th class="py-3 text-center text-body-emphasis">Premium</th>
@@ -61,6 +44,7 @@
                   <span class="fw-medium text-body-emphasis">{{ user.name }}</span>
                 </div>
               </td>
+              <td class="text-body-secondary">{{ user.username }}</td>
               <td class="text-body-secondary">{{ user.email }}</td>
               <td>
                 <span
@@ -72,9 +56,9 @@
               <td>
                 <span
                   class="badge rounded-pill px-3 py-2 border-0"
-                  [ngClass]="user ? 'badge-status-active' : 'badge-status-inactive'"
+                  [ngClass]="user.active ? 'badge-status-active' : 'badge-status-inactive'"
                 >
-                  {{ user ? 'Activo' : 'Inactivo' }}
+                  {{ user.active ? 'Activo' : 'Inactivo' }}
                 </span>
               </td>
               <td class="text-center">
@@ -86,11 +70,20 @@
               </td>
               <td class="text-center pe-4">
                 <div class="d-flex justify-content-center gap-2">
+                  @if (!user.roles.includes('ADMIN')) {
+                  <button
+                    class="btn btn-action btn-action-admin"
+                    title="Asignar rol Admin"
+                    (click)="setAdminRole(user.username)"
+                  >
+                    <i class="bi bi-shield-fill-plus"></i>
+                  </button>
+                  }
                   <button
                     class="btn btn-action btn-action-edit"
-
                     data-bs-toggle="modal"
                     data-bs-target="#userModal"
+                    (click)="editUserModal(user)"
                   >
                     <i class="bi bi-pencil-square"></i>
                   </button>
@@ -116,7 +109,44 @@
     </div>
   </div>
 
-  <!-- Modal -->
+  @if (pagesNumber > 1) {
+  <nav aria-label="Paginación de usuarios" class="mt-auto pt-4">
+    <ul class="pagination justify-content-center">
+
+      <li class="page-item" [class.disabled]="currentPageNumber === 0">
+        <button class="page-link" (click)="changePage(0)" aria-label="Primera página">
+          <i class="bi bi-chevron-double-left"></i>
+        </button>
+      </li>
+
+      <li class="page-item" [class.disabled]="currentPageNumber === 0">
+        <button class="page-link" (click)="changePage(currentPageNumber - 1)" aria-label="Anterior">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      </li>
+
+      <li class="page-item disabled">
+        <span class="page-link text-body fw-semibold">
+          {{ currentPageNumber + 1 }} / {{ pagesNumber }}
+        </span>
+      </li>
+
+      <li class="page-item" [class.disabled]="currentPageNumber === pagesNumber - 1">
+        <button class="page-link" (click)="changePage(currentPageNumber + 1)" aria-label="Siguiente">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </li>
+
+      <li class="page-item" [class.disabled]="currentPageNumber === pagesNumber - 1">
+        <button class="page-link" (click)="changePage(pagesNumber - 1)" aria-label="Última página">
+          <i class="bi bi-chevron-double-right"></i>
+        </button>
+      </li>
+
+    </ul>
+  </nav>
+  }
+
   <div class="modal fade" id="userModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content border-0 shadow">
@@ -133,68 +163,137 @@
         </div>
         <div class="modal-body p-4">
           <form [formGroup]="userFormGroup">
-            <!-- Full Name -->
+
+            @if (!isEditing) {
             <div class="mb-3">
-              <label class="form-label text-body-secondary small fw-bold">Nombre completo *</label>
-              <input
-                type="text"
-                class="form-control bg-body-tertiary border-0 py-2"
-                formControlName="nameFormControl"
-                placeholder="Juan Pérez"
-              />
+              <label class="form-label text-body-secondary small fw-semibold">Nombre de usuario *</label>
+              <div class="input-group">
+                <span class="input-group-text bg-body-tertiary border-0">
+                  <i class="bi bi-person text-body-secondary"></i>
+                </span>
+                <input
+                  type="text"
+                  class="form-control bg-body-tertiary border-0 border-start-0"
+                  placeholder="usuario123"
+                  formControlName="usernameFormControl"
+                />
+              </div>
+              @if (userFormGroup.get('usernameFormControl')?.invalid && userFormGroup.get('usernameFormControl')?.dirty) {
+                <div class="mt-1 text-danger small">Mínimo 2 caracteres.</div>
+              }
+            </div>
+            }
+
+            <!-- Nombre -->
+            <div class="mb-3">
+              <label class="form-label text-body-secondary small fw-semibold">Nombre *</label>
+              <div class="input-group">
+                <span class="input-group-text bg-body-tertiary border-0">
+                  <i class="bi bi-person-badge text-body-secondary"></i>
+                </span>
+                <input
+                  type="text"
+                  class="form-control bg-body-tertiary border-0 border-start-0"
+                  placeholder="Juan"
+                  formControlName="nameFormControl"
+                />
+              </div>
+              @if (userFormGroup.get('nameFormControl')?.invalid && userFormGroup.get('nameFormControl')?.dirty) {
+                <div class="mt-1 text-danger small">El nombre es obligatorio (mínimo 2 caracteres).</div>
+              }
+            </div>
+
+            <!-- Apellidos -->
+            <div class="mb-3">
+              <label class="form-label text-body-secondary small fw-semibold">Apellidos *</label>
+              <div class="input-group">
+                <span class="input-group-text bg-body-tertiary border-0">
+                  <i class="bi bi-person-badge text-body-secondary"></i>
+                </span>
+                <input
+                  type="text"
+                  class="form-control bg-body-tertiary border-0 border-start-0"
+                  placeholder="Pérez"
+                  formControlName="lastnameFormControl"
+                />
+              </div>
+              @if (userFormGroup.get('lastnameFormControl')?.invalid && userFormGroup.get('lastnameFormControl')?.dirty) {
+                <div class="mt-1 text-danger small">Los apellidos son obligatorios (mínimo 2 caracteres).</div>
+              }
             </div>
 
             <!-- Email -->
             <div class="mb-3">
-              <label class="form-label text-body-secondary small fw-bold">Email *</label>
-              <input
-                type="email"
-                class="form-control bg-body-tertiary border-0 py-2"
-                formControlName="emailFormControl"
-                placeholder="usuario@email.com"
-              />
-
-              <!-- Phone -->
-              <div class="mb-3">
-                <label class="form-label text-body-secondary small fw-bold">Teléfono *</label>
+              <label class="form-label text-body-secondary small fw-semibold">Email *</label>
+              <div class="input-group">
+                <span class="input-group-text bg-body-tertiary border-0">
+                  <i class="bi bi-envelope text-body-secondary"></i>
+                </span>
                 <input
-                  type="tel"
-                  class="form-control bg-body-tertiary border-0 py-2"
-                  formControlName="phoneFormControl"
-                  placeholder="+34 600 000 000"
+                  type="email"
+                  class="form-control bg-body-tertiary border-0 border-start-0"
+                  placeholder="usuario@email.com"
+                  formControlName="emailFormControl"
                 />
               </div>
-
-              <!-- Password (only for create for now, usually hidden on edit or optional) -->
-              @if (!isEditing) {
-              <div class="mb-3">
-                <label class="form-label text-body-secondary small fw-bold">Contraseña *</label>
-                <input
-                  type="password"
-                  class="form-control bg-body-tertiary border-0 py-2"
-                  formControlName="passwordFormcontrol"
-                  placeholder="********"
-                />
-              </div>
+              @if (userFormGroup.get('emailFormControl')?.invalid && userFormGroup.get('emailFormControl')?.dirty) {
+                <div class="mt-1 text-danger small">Introduce un correo válido.</div>
               }
-
-              <!-- Role & Status Grid -->
-              <div class="row g-3 mb-4">
-                <div class="col-md-6">
-                  <label class="form-label text-body-secondary small fw-bold">Rol *</label>
-                  <select
-                    class="form-select bg-body-tertiary border-0 py-2"
-                    formControlName="rolFormControl"
-                  >
-                    <option value="user">Usuario</option>
-                    <option value="admin">Administrador</option>
-                    <option value="guest">Invitado</option>
-                  </select>
-                </div>
-              </div>
-
-
             </div>
+
+            @if (!isEditing) {
+            <!-- Contraseña -->
+            <div class="mb-3">
+              <label class="form-label text-body-secondary small fw-semibold">Contraseña *</label>
+              <div class="input-group">
+                <span class="input-group-text bg-body-tertiary border-0">
+                  <i class="bi bi-lock text-body-secondary"></i>
+                </span>
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  class="form-control bg-body-tertiary border-0 border-start-0 border-end-0"
+                  placeholder="••••••••"
+                  formControlName="passwordFormcontrol"
+                />
+                <button type="button" class="input-group-text bg-body-tertiary border-0 border-start-0" (click)="togglePassword()">
+                  @if (showPassword) {
+                    <i class="bi bi-eye-slash text-body-secondary"></i>
+                  } @else {
+                    <i class="bi bi-eye text-body-secondary"></i>
+                  }
+                </button>
+              </div>
+              @if (userFormGroup.get('passwordFormcontrol')?.invalid && userFormGroup.get('passwordFormcontrol')?.dirty) {
+                <div class="mt-1 text-danger small">Mínimo 8 caracteres.</div>
+              }
+            </div>
+
+            <!-- Confirmar contraseña -->
+            <div class="mb-3">
+              <label class="form-label text-body-secondary small fw-semibold">Confirmar contraseña *</label>
+              <div class="input-group">
+                <span class="input-group-text bg-body-tertiary border-0">
+                  <i class="bi bi-lock-fill text-body-secondary"></i>
+                </span>
+                <input
+                  [type]="showPasswordConfirm ? 'text' : 'password'"
+                  class="form-control bg-body-tertiary border-0 border-start-0 border-end-0"
+                  placeholder="••••••••"
+                  formControlName="passwordConfirmFormcontrol"
+                />
+                <button type="button" class="input-group-text bg-body-tertiary border-0 border-start-0" (click)="togglePasswordConfirm()">
+                  @if (showPasswordConfirm) {
+                    <i class="bi bi-eye-slash text-body-secondary"></i>
+                  } @else {
+                    <i class="bi bi-eye text-body-secondary"></i>
+                  }
+                </button>
+              </div>
+              @if (userFormGroup.get('passwordConfirmFormcontrol')?.dirty && userFormGroup.get('passwordConfirmFormcontrol')?.value !== userFormGroup.get('passwordFormcontrol')?.value) {
+                <div class="mt-1 text-danger small">Las contraseñas no coinciden.</div>
+              }
+            </div>
+            }
             <div class="modal-footer border-top-0 pt-0">
               <button
                 type="button"

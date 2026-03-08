@@ -1,5 +1,4 @@
-<app-sidebar></app-sidebar>
-<div class="container-fluid p-4 bg-body min-vh-100" style="margin-left: 250px" [attr.data-bs-theme]="isDarkTheme ? 'dark' : 'light'">
+<div class="container-fluid p-4 bg-body min-vh-100" [attr.data-bs-theme]="isDarkTheme ? 'dark' : 'light'">
   <div class="mb-4">
     <h2 class="fw-bold text-body-emphasis">Centro de Notificaciones</h2>
     <p class="text-muted">Envía y gestiona notificaciones del sistema</p>
@@ -94,10 +93,7 @@
                     <i class="bi" [class]="getIcon(reminder)"></i> {{ getType(reminder) }}
                   </span>
                   <div class="text-end">
-                    <small class="text-muted d-block" style="font-size: 0.75rem">{{
-                      reminder.created_at.replace('T', ' ').replace('Z', '').slice(0, -7)
-                    }}</small>
-                    @if (reminder.is_read) {
+                    @if (reminder.read) {
                       <i class="bi bi-check-all text-info"></i>
                     }
                   </div>
@@ -107,7 +103,7 @@
                 <!-- Unread indicator dot if needed, for now just card style -->
               </div>
               <!-- Optional side color strip for unread messages -->
-              @if (!reminder.is_read) {
+              @if (!reminder.read) {
                 <div class="status-strip"></div>
               }
             </div>

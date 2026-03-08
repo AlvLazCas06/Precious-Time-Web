@@ -8,6 +8,7 @@ import { NotificationsPage } from './pages/notifications-page/notifications-page
 import { CategoryPage } from './pages/category-page/category-page';
 import { TaskPage } from './pages/task-page/task-page';
 import { ProjectPage } from './pages/project-page/project-page';
+import { AdminLayoutComponent } from './layouts/admin-layout-component/admin-layout-component';
 
 export const routes: Routes = [
   {
@@ -24,31 +25,37 @@ export const routes: Routes = [
     component: SignUpPage
   },
   {
-    path: 'users',
-    component: UserList
-  },
-  {
-    path: 'dashboard',
-    component: DashboardPage
-  },
-  {
-    path: 'tasks',
-    component: TaskPage
-  },
-  {
-    path: 'projects',
-    component: ProjectPage
-  },
-  {
-    path: 'categories',
-    component: CategoryPage
-  },
-  {
-    path: 'notifications',
-    component: NotificationsPage
-  },
-  {
-    path: 'preference',
-    component: PreferencePage
+    path: 'admin',
+    component: AdminLayoutComponent,
+    children: [
+      {
+        path: 'users',
+        component: UserList
+      },
+      {
+        path: 'dashboard',
+        component: DashboardPage
+      },
+      {
+        path: 'tasks',
+        component: TaskPage
+      },
+      {
+        path: 'projects',
+        component: ProjectPage
+      },
+      {
+        path: 'categories',
+        component: CategoryPage
+      },
+      {
+        path: 'notifications',
+        component: NotificationsPage
+      },
+      {
+        path: 'preference',
+        component: PreferencePage
+      }
+    ]
   }
 ];

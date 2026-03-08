@@ -14,7 +14,7 @@ export class ReminderService {
   constructor(private http: HttpClient) {}
 
   createNotification(newReminder: CreateReminderDto): Observable<ReminderResponse> {
-    return this.http.post<ReminderResponse>(`${this.urlBase}`, newReminder);
+    return this.http.post<ReminderResponse>(`${this.urlBase}/admin`, newReminder);
   }
 
   getNotifiactions(): Observable<ReminderListResponse> {

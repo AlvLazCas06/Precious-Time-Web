@@ -11,6 +11,12 @@ import { UserLoginDto } from '../../models/dto/user-login.dto';
   styleUrl: './login-page.css',
 })
 export class LoginPage {
+  showPassword = false;
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+
   loginFormGroup = new FormGroup({
     usernameFormControl: new FormControl('', [
       Validators.required
@@ -35,7 +41,7 @@ export class LoginPage {
         const token = resp.token;
         localStorage.setItem('token', token);
         if (resp.roles.some(role => role === 'ADMIN')) {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/admin/dashboard']);
         } else {
           alert('El rol de este usuario no es admin por lo tanto no puede entrar.')
         }

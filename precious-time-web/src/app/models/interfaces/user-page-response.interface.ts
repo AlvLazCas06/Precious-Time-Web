@@ -1,4 +1,4 @@
-export interface UserListResponse {
+export interface UserPageResponse {
   content: UserItem[];
   page: Page;
 }
@@ -11,6 +11,7 @@ export interface UserItem {
   premium: boolean;
   roles: string[];
   active: boolean;
+  registerAt: string;
 }
 
 export interface Page {

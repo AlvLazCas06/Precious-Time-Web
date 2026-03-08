@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Task, TaskListResponse } from '../models/interfaces/task-list-response.interface';
-import { CreateTaskDto } from '../models/dto/create-task.dto';
+import { Task, TaskPageResponse } from '../models/interfaces/task-page-response.interface';
+import { TaskListResponse } from '../models/interfaces/task-list-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,12 +13,12 @@ export class TaskService {
 
   constructor(private http: HttpClient) {}
 
-  getTasks(): Observable<TaskListResponse> {
-    return this.http.get<TaskListResponse>(`${this.urlBase}/admin`);
+  getTasks(numPage: number): Observable<TaskPageResponse> {
+    return this.http.get<TaskPageResponse>(`${this.urlBase}/admin?page=${numPage}`);
   }
 
-  createTask(task: CreateTaskDto): Observable<Task> {
-    return this.http.post<Task>(`${this.urlBase}`, null);
+  getListTasks(): Observable<TaskListResponse>{
+    return this.http.get<TaskListResponse>(`${this.urlBase}/admin/all`);
   }
 
 }

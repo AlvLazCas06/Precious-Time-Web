@@ -1,115 +1,204 @@
-<div class="container-fluid vh-100 p-0">
-  <div class="row g-0 h-100">
-    <div class="col-md-6 bg-light d-flex align-items-center justify-content-center">
-      <div class="w-75 p-5">
-        <img src="images/precious-time-logo-big.png" alt="Logo Precious Time" class="img-fluid" />
-      </div>
-    </div>
+<div
+  class="d-flex flex-column align-items-center justify-content-center min-vh-100 py-5"
+  style="background: linear-gradient(170deg, #e8f3fd 0%, #c9dff5 100%)"
+>
+  <!-- Clock icon -->
+  <div
+    class="bg-white rounded-circle d-flex align-items-center justify-content-center shadow-sm mb-3"
+    style="width: 80px; height: 80px"
+  >
+    <i class="bi bi-clock fs-1" style="color: #17b8c8"></i>
+  </div>
 
-    <div class="col-md-6 bg-white d-flex align-items-center justify-content-center">
-      <div class="w-75 px-4">
-        <h1 class="text-center mb-5 fw-light fs-1">Iniciar Sesión</h1>
-        <form [formGroup]="signUpForm">
-          <div class="mb-4">
+  <h2 class="fw-bold mb-1">Precious Time</h2>
+  <p class="text-muted mb-4">Crea tu cuenta</p>
+
+  <!-- Sign-up card -->
+  <div class="card border-0 shadow-sm rounded-4 p-3" style="width: 340px">
+    <div class="card-body">
+      <form [formGroup]="signUpForm">
+
+        <!-- Username -->
+        <div class="mb-3">
+          <label class="form-label small text-muted fw-semibold">Nombre de usuario *</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white">
+              <i class="bi bi-person text-muted"></i>
+            </span>
             <input
               type="text"
-              id="name"
-              name="name"
-              class="form-control form-control-lg rounded-3 border-secondary"
-              placeholder="Username"
+              class="form-control border-start-0"
+              placeholder="usuario123"
               formControlName="usernameFormControl"
             />
-            @if (signUpForm.get('usernameFormControl')?.invalid && signUpForm.get('usernameFormControl')?.dirty) {
-              <div class="mt-2 alert alert-danger">
-                @if (signUpForm.get('usernameFormControl')?.hasError('required')) {
-                  <p>El nombre es un campo obligatorio</p>
-                }
-                @if (signUpForm.get('usernameFormControl')?.hasError('minLength')) {
-                  <p>La cantidad de caracteres del nombre es insuficiente</p>
-                }
-              </div>
-            }
           </div>
-          <div class="mb-4">
+          @if (signUpForm.get('usernameFormControl')?.invalid && signUpForm.get('usernameFormControl')?.dirty) {
+            <div class="mt-1 text-danger small">
+              @if (signUpForm.get('usernameFormControl')?.hasError('required')) {
+                El nombre de usuario es obligatorio.
+              }
+              @if (signUpForm.get('usernameFormControl')?.hasError('minlength')) {
+                Mínimo 2 caracteres.
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Nombre -->
+        <div class="mb-3">
+          <label class="form-label small text-muted fw-semibold">Nombre *</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white">
+              <i class="bi bi-person-badge text-muted"></i>
+            </span>
             <input
               type="text"
-              id="name"
-              name="name"
-              class="form-control form-control-lg rounded-3 border-secondary"
-              placeholder="Nombre"
+              class="form-control border-start-0"
+              placeholder="María"
               formControlName="nameFormControl"
             />
-            @if (signUpForm.get('nameFormControl')?.invalid && signUpForm.get('nameFormControl')?.dirty) {
-              <div class="mt-2 alert alert-danger">
-                @if (signUpForm.get('nameFormControl')?.hasError('required')) {
-                  <p>El nombre es un campo obligatorio</p>
-                }
-                @if (signUpForm.get('nameFormControl')?.hasError('minLength')) {
-                  <p>La cantidad de caracteres del nombre es insuficiente</p>
-                }
-              </div>
-            }
           </div>
-          <div class="mb-4">
+          @if (signUpForm.get('nameFormControl')?.invalid && signUpForm.get('nameFormControl')?.dirty) {
+            <div class="mt-1 text-danger small">
+              @if (signUpForm.get('nameFormControl')?.hasError('required')) {
+                El nombre es obligatorio.
+              }
+              @if (signUpForm.get('nameFormControl')?.hasError('minlength')) {
+                Mínimo 2 caracteres.
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label small text-muted fw-semibold">Nombre completo *</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white">
+              <i class="bi bi-person-badge text-muted"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control border-start-0"
+              placeholder="García"
+              formControlName="lastnameFormControl"
+            />
+          </div>
+          @if (signUpForm.get('lastnameFormControl')?.invalid && signUpForm.get('lastnameFormControl')?.dirty) {
+            <div class="mt-1 text-danger small">
+              @if (signUpForm.get('lastnameFormControl')?.hasError('required')) {
+                El nombre es obligatorio.
+              }
+              @if (signUpForm.get('lastnameFormControl')?.hasError('lastminlength')) {
+                Mínimo 2 caracteres.
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label class="form-label small text-muted fw-semibold">Correo electrónico *</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white">
+              <i class="bi bi-envelope text-muted"></i>
+            </span>
             <input
               type="email"
-              id="email"
-              name="email"
-              class="form-control form-control-lg rounded-3 border-secondary"
-              placeholder="Email"
+              class="form-control border-start-0"
+              placeholder="maria@ejemplo.com"
               formControlName="emailFormControl"
             />
-            @if (signUpForm.get('emailFormControl')?.invalid && signUpForm.get('emailFormControl')?.dirty) {
-              <div class="mt-2 alert alert-danger">
-                @if (signUpForm.get('emailFormControl')?.hasError('required')) {
-                  <p>El email es un campo obligatorio</p>
-                }
-                @if (signUpForm.get('emailFormControl')?.hasError('email')) {
-                  <p>No es una dirección de correo valida</p>
-                }
-              </div>
-            }
           </div>
-          <div class="mb-4">
+          @if (signUpForm.get('emailFormControl')?.invalid && signUpForm.get('emailFormControl')?.dirty) {
+            <div class="mt-1 text-danger small">
+              @if (signUpForm.get('emailFormControl')?.hasError('required')) {
+                El correo es obligatorio.
+              }
+              @if (signUpForm.get('emailFormControl')?.hasError('email')) {
+                Introduce un correo válido.
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Contraseña -->
+        <div class="mb-3">
+          <label class="form-label small text-muted fw-semibold">Contraseña *</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white">
+              <i class="bi bi-lock text-muted"></i>
+            </span>
             <input
-              type="password"
-              name="password"
-              id="password"
-              class="form-control form-control-lg rounded-3 border-secondary"
-              placeholder="Contraseña"
+              [type]="showPassword ? 'text' : 'password'"
+              class="form-control border-start-0 border-end-0"
+              placeholder="••••••••"
               formControlName="passwordFormControl"
             />
-            @if (signUpForm.get('passwordFormControl')?.invalid && signUpForm.get('passwordFormControl')?.dirty) {
-              <div class="mt-2 alert alert-danger">
-                @if (signUpForm.get('passwordFormControl')?.hasError('required')) {
-                  <p>La contraseña es un campo obligatorio</p>
-                }
-                @if (signUpForm.get('passwordFormControl')?.hasError('minLength')) {
-                  <p>No es una dirección de correo valida</p>
-                }
-              </div>
-            }
+            <button type="button" class="input-group-text bg-white border-start-0" (click)="togglePassword()">
+              @if (showPassword) {
+                <i class="bi bi-eye-slash text-muted"></i>
+              } @else {
+                <i class="bi bi-eye text-muted"></i>
+              }
+            </button>
           </div>
-          <div class="mb-4">
+          @if (signUpForm.get('passwordFormControl')?.invalid && signUpForm.get('passwordFormControl')?.dirty) {
+            <div class="mt-1 text-danger small">
+              @if (signUpForm.get('passwordFormControl')?.hasError('required')) {
+                La contraseña es obligatoria.
+              }
+              @if (signUpForm.get('passwordFormControl')?.hasError('minlength')) {
+                Mínimo 8 caracteres.
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Confirmar contraseña -->
+        <div class="mb-4">
+          <label class="form-label small text-muted fw-semibold">Confirmar contraseña *</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white">
+              <i class="bi bi-lock-fill text-muted"></i>
+            </span>
             <input
-              type="password"
-              name="passwordconfirm"
-              id="passwordconfirm"
-              class="form-control form-control-lg rounded-3 border-secondary"
-              placeholder="Confirmar contraseña"
+              [type]="showPasswordConfirm ? 'text' : 'password'"
+              class="form-control border-start-0 border-end-0"
+              placeholder="••••••••"
               formControlName="passwordConfirmFormControl"
             />
-            @if (signUpForm.get('passwordConfirmFormControl')?.dirty && signUpForm.get('passwordConfirmFormControl')?.value != signUpForm.get('passwordFormControl')?.value) {
-              <div class="alert alert-danger">
-                <p>Las contraseñas no son iguales</p>
-              </div>
-            }
+            <button type="button" class="input-group-text bg-white border-start-0" (click)="togglePasswordConfirm()">
+              @if (showPasswordConfirm) {
+                <i class="bi bi-eye-slash text-muted"></i>
+              } @else {
+                <i class="bi bi-eye text-muted"></i>
+              }
+            </button>
           </div>
-          <div class="d-grid">
-            <button class="btn btn-primary btn-lg rounded-3" [disabled]="signUpForm.invalid || signUpForm.get('passwordConfirmFormControl')?.value != signUpForm.get('passwordFormControl')?.value" (click)="createUser()">Crear cuenta</button>
-          </div>
-        </form>
-      </div>
+          @if (signUpForm.get('passwordConfirmFormControl')?.dirty && signUpForm.get('passwordConfirmFormControl')?.value !== signUpForm.get('passwordFormControl')?.value) {
+            <div class="mt-1 text-danger small">Las contraseñas no coinciden.</div>
+          }
+        </div>
+
+        <!-- Submit -->
+        <div class="d-grid">
+          <button
+            class="btn btn-primary btn-lg rounded-pill fw-semibold"
+            [disabled]="signUpForm.invalid || signUpForm.get('passwordConfirmFormControl')?.value !== signUpForm.get('passwordFormControl')?.value"
+            (click)="createUser()"
+          >
+            Crear cuenta
+          </button>
+        </div>
+      </form>
     </div>
   </div>
+
+  <!-- Login link -->
+  <p class="mt-4 text-muted small">
+    ¿Ya tienes cuenta?
+    <a routerLink="/login" class="text-decoration-none fw-semibold" style="color: #17b8c8">
+      Iniciar sesión
+    </a>
+  </p>
 </div>

@@ -1,5 +1,4 @@
-<app-sidebar></app-sidebar>
-<div class="container-fluid p-4 bg-body min-vh-100" style="margin-left: 250px" [attr.data-bs-theme]="isDarkTheme ? 'dark' : 'light'">
+<div class="container-fluid p-4 bg-body min-vh-100 d-flex flex-column" [attr.data-bs-theme]="isDarkTheme ? 'dark' : 'light'">
 
   <!-- Header -->
   <div class="d-flex justify-content-between align-items-center mb-4">
@@ -7,12 +6,6 @@
       <h2 class="fw-bold text-body-emphasis">Gestión de Proyectos</h2>
       <p class="text-body-secondary mb-0">Administra y supervisa todos los proyectos de la plataforma</p>
     </div>
-    <button
-      class="btn btn-teal px-4 py-2 fw-medium rounded-pill"
-      data-bs-toggle="modal"
-      data-bs-target="#newProjectModal">
-      <i class="bi bi-plus-lg me-2"></i> Nuevo Proyecto
-    </button>
   </div>
 
   <!-- Table -->
@@ -71,22 +64,7 @@
   </div>
 
   <div class="row g-4">
-    <!-- Pendientes -->
-    <div class="col-md-3">
-      <div class="card summary-card card-pending h-100">
-        <div class="card-body p-4 d-flex justify-content-between align-items-center">
-          <div>
-            <p class="text-body-secondary mb-1">Pendientes</p>
-            <span class="count">{{ pendingCount }}</span>
-          </div>
-          <div class="icon-box">
-            <i class="bi bi-calendar-event"></i>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- En Proceso -->
     <div class="col-md-3">
       <div class="card summary-card card-process h-100">
         <div class="card-body p-4 d-flex justify-content-between align-items-center">
@@ -132,53 +110,42 @@
     </div>
   </div>
 
-  <!-- Modal -->
-  <div class="modal fade" id="newProjectModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-      <div class="modal-content border-0 shadow">
-        <div class="modal-header border-bottom-0 pb-0">
-          <h5 class="modal-title fw-bold text-body-emphasis">Nuevo Proyecto</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body p-4">
-          <form [formGroup]="projectFormGroup">
+  @if (pagesNumber > 1) {
+  <nav aria-label="Paginación de proyectos" class="mt-auto pt-4">
+    <ul class="pagination justify-content-center">
 
-            <!-- Name -->
-            <div class="mb-3">
-              <label class="form-label text-body-secondary small fw-bold">Nombre del Proyecto *</label>
-              <input type="text" class="form-control bg-body-tertiary border-0 py-2"
-                     formControlName="nameFormControl" placeholder="Ej: Rediseño de la aplicación móvil">
-            </div>
+      <li class="page-item" [class.disabled]="currentPageNumber === 0">
+        <button class="page-link" (click)="changePage(0)" aria-label="Primera página">
+          <i class="bi bi-chevron-double-left"></i>
+        </button>
+      </li>
 
-            <!-- Description -->
-            <div class="mb-4">
-              <label class="form-label text-body-secondary small fw-bold">Descripción *</label>
-              <textarea class="form-control bg-body-tertiary border-0 py-2" rows="4"
-                        formControlName="descriptionFormControl" placeholder="Describe los objetivos y alcance del proyecto..."></textarea>
-            </div>
+      <li class="page-item" [class.disabled]="currentPageNumber === 0">
+        <button class="page-link" (click)="changePage(currentPageNumber - 1)" aria-label="Anterior">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+      </li>
 
-             <!-- Progress Slider (Visual addition based on mock modal) -->
-             <div class="mb-3">
-               <div class="d-flex justify-content-between align-items-center mb-2">
-                 <label class="form-label text-body-secondary small fw-bold mb-0">Progreso del Proyecto</label>
-                 <span class="fw-bold fs-5 text-body-emphasis">
-                   {{ projectFormGroup.get('progressFormControl')?.value || 0 }}<small class="fs-6">%</small>
-                 </span>
-               </div>
-               <input type="range" class="form-range" min="0" max="100" formControlName="progressFormControl">
-             </div>
+      <li class="page-item disabled">
+        <span class="page-link text-body fw-semibold">
+          {{ currentPageNumber + 1 }} / {{ pagesNumber }}
+        </span>
+      </li>
 
-          </form>
-        </div>
-        <div class="modal-footer border-top-0 pt-0">
-          <button type="button" class="btn btn-outline-secondary px-4 py-2" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-teal text-white px-4 py-2 fw-medium"
-                  (click)="createProject()" data-bs-dismiss="modal" [disabled]="projectFormGroup.invalid">
-            Crear Proyecto
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
+      <li class="page-item" [class.disabled]="currentPageNumber === pagesNumber - 1">
+        <button class="page-link" (click)="changePage(currentPageNumber + 1)" aria-label="Siguiente">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </li>
+
+      <li class="page-item" [class.disabled]="currentPageNumber === pagesNumber - 1">
+        <button class="page-link" (click)="changePage(pagesNumber - 1)" aria-label="Última página">
+          <i class="bi bi-chevron-double-right"></i>
+        </button>
+      </li>
+
+    </ul>
+  </nav>
+  }
 
 </div>

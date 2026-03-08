@@ -13,8 +13,8 @@ export class PreferenceService {
 
   constructor(private http: HttpClient) { }
 
-  createPreference(): Observable<PreferenceResponse> {
-    return this.http.post<PreferenceResponse>(`${this.urlBase}`, null);
+  createPreference(username: string): Observable<PreferenceResponse> {
+    return this.http.post<PreferenceResponse>(`${this.urlBase}`, username);
   }
 
   getPreference(): Observable<PreferenceResponse> {
